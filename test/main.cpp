@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Mavis.h"
 #include "Inst.h"
 #include "uArchInfo.h"
@@ -9,6 +8,9 @@
 
 // For custom extraction
 #include "ExtractorDirectImplementations.hpp"
+
+#include <iostream>
+#include <iomanip>
 
 using namespace std;
 using json = nlohmann::json;
@@ -49,13 +51,21 @@ struct ExampleTraceInfo
     }
 };
 
+
 using MavisType = Mavis<Instruction<uArchInfo>, uArchInfo>;
+
+void test_addigp(MavisType &mav_andes);
 
 void runTSet(MavisType& mavis_facade, const std::string& tfile,
              const std::vector<mavis::OpcodeInfo::ISAExtension> isa_list = {})
 {
     // Run a test file
     ifstream    tin(tfile);
+
+    if(!tin.is_open()) {
+       std::cout<<"Could not open tset file '"<<tfile<<"'"<<std::endl;
+       exit(1);
+    }
 
     while (tin) {
         string  line;
@@ -168,6 +178,7 @@ int main() {
             std::make_pair("srai", "rob_group:[\"begin\"]"),
         };
 
+if(0) {
     MavisType mavis_facade({"../../json/isa_rv64i.json",        // included in "g" spec
                             "../../json/isa_rv64f.json",        // included in "g" spec
                             "../../json/isa_rv64m.json",        // included in "g" spec
@@ -193,6 +204,7 @@ int main() {
                            {"../uarch_rv64g.json"},
                            uid_init,
                            anno_overrides);
+
     cout << mavis_facade;
 
     Instruction<uArchInfo>::PtrType inst = nullptr;
@@ -1097,6 +1109,58 @@ int main() {
     inst = mavis_facade_rv32.makeInst(0x4041d213, 0);
     assert(inst != nullptr);
     cout << "line " << dec << __LINE__ << ": " << "DASM: 0x4041d213 = " << inst->dasmString() << endl;
+}
+
+    MavisType mav_andes({"../../json/isa_andestar.json"}, {}, uid_init, anno_overrides);
+
+    cout << mav_andes;
+
+
+    test_addigp(mav_andes);
+
 
     return 0;
+}
+
+void test_addigp(MavisType &mav_andes) {
+
+    Instruction<uArchInfo>::PtrType astar = nullptr;
+
+    vector<uint32_t> vec_addigp = {
+      0xee87930b,
+      0x849f970b,
+      0xf915180b,
+      0xf5151c8b
+    };
+
+    // See swizzle.py 
+    for(size_t i=0;i<vec_addigp.size();++i) {
+      astar = mav_andes.makeInst(vec_addigp[i], 0);
+      assert(astar != nullptr);
+
+      mavis::OpcodeInfo::PtrType dinfo = astar->getOpInfo();
+
+      cout<<" Input: 0x"<<hex<<setw(8)<<vec_addigp[i]<<endl;
+
+      cout << "line " << dec << __LINE__ << ": " 
+           << "DASM: 0x"<<hex<<setw(8)<<vec_addigp[i]<<" = " << astar->dasmString() << endl;
+
+      cout << "line " << dec << __LINE__ << ": " 
+           << "Signed-offset: 0x" 
+           << std::hex << astar->getSignedOffset() << endl;
+
+      cout << "line " << dec << __LINE__ << ": " 
+           << "Source regs 0x"<< std::hex << dinfo->getSourceRegs() << endl;
+
+      cout << "line " << dec << __LINE__ << ": " 
+           << "Dest regs   0x"<< std::hex << dinfo->getDestRegs() << endl;
+
+      cout << "line " << dec << __LINE__ << ": " 
+           << "Num src regs "<< std::dec << dinfo->numSourceRegs() << endl;
+
+      cout << "line " << dec << __LINE__ << ": " 
+           << "Num dst regs "<< std::dec << dinfo->numDestRegs() << endl;
+
+      cout << endl;
+    }
 }

@@ -3,6 +3,7 @@
 #include "impl/forms/CommonForms.h"
 #include "impl/forms/CompressedForms.h"
 #include "impl/forms/VectorForms.h"
+#include "impl/forms/AndeStarForms.h"
 #include <iostream>
 
 namespace mavis {
@@ -38,7 +39,12 @@ namespace mavis {
         {Form_V_vsetvl::name,   new Form<Form_V_vsetvl>()},
         {Form_V_vsetvli::name,  new Form<Form_V_vsetvli>()},
         {Form_V_vsetivli::name, new Form<Form_V_vsetivli>()},
-        {Form_V_uimm6::name,    new Form<Form_V_uimm6>()}
+        {Form_V_uimm6::name,    new Form<Form_V_uimm6>()},
+
+        {Form_AndeStar_Custom_0::name,new Form<Form_AndeStar_Custom_0>()}
+//  {Form_AndeStar_Custom_1_LOAD::name, new Form<Form_AndeStar_Custom_1_LOAD>()},
+//  {Form_AndeStar_Custom_1_STORE::name,new Form<Form_AndeStar_Custom_1_STORE>()}
+
     };
 
     const FormBase* FormRegistry::findFormWrapper(const std::string& fname)

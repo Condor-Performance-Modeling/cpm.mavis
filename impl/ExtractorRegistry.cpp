@@ -2,6 +2,7 @@
 #include "mavis/ExtractorRegistry.h"
 #include "impl/forms/ExtractorForms.h"
 #include "impl/forms/ExtractorDerived.h"
+#include "impl/forms/AndeStarExtractorForms.h"
 
 namespace mavis {
 
@@ -83,7 +84,8 @@ namespace mavis {
             {Form_V_op::name,                     std::make_shared<Extractor<Form_V_op>>()},
             {Form_V_implied::name,                std::make_shared<Extractor<Form_V_implied>>()},
             {Form_V_op_implied::name,             std::make_shared<Extractor<Form_V_op_implied>>()},
-            {Form_V_uimm_implied::name,           std::make_shared<Extractor<Form_V_uimm_implied>>()}
+            {Form_V_uimm_implied::name,           std::make_shared<Extractor<Form_V_uimm_implied>>()},
+            {Form_AndeStar_Custom_0::name,        std::make_shared<Extractor<Form_AndeStar_Custom_0>>()}
         };
 
         const auto itr = EXTRACTOR_REGISTRY.find(fname);

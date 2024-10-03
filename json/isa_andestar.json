@@ -1,0 +1,38 @@
+[
+  {
+    "mnemonic" : "nop",
+    "tags" : ["i", "g"],
+    "form" : "ISHW",
+    "ignore" : [ "func7" ],
+    "xform" : "I",
+    "stencil" : "0x00",
+    "w-oper" : "all",
+    "type" : ["int", "arith"],
+    "l-oper" : "all"
+  },
+  {
+    "mnemonic" : "addiw",
+    "tags" : ["i", "g"],
+    "form" : "ISHW",
+    "ignore" : [ "func7" ],
+    "xform" : "I",
+    "stencil" : "0x1b",
+    "w-oper" : "all",
+    "type" : ["int", "arith"],
+    "l-oper" : "all"
+  },
+  {
+    "_comment" : [
+       "AndeStar V5 Performance Extension",
+       "UM165-15, 2023-06-29",
+       "GP-implied (X3) Add Immediate"
+    ],
+    "mnemonic" : "addigp",
+    "form" : "AndeStar_Custom_0",
+    "l-oper" : "all",
+    "stencil" : "0x100b",
+    "tags" : ["i", "g"],
+    "type" : ["int", "arith"],
+    "uid" : "1000"
+  }
+]

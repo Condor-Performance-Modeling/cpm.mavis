@@ -12,6 +12,7 @@ add_library(mavis
   impl/forms/CommonForms.cpp
   impl/forms/CompressedForms.cpp
   impl/forms/VectorForms.cpp
+	impl/forms/AndeStarForms.cpp
 )
 
 add_subdirectory(test EXCLUDE_FROM_ALL)

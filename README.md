@@ -15,19 +15,13 @@ make -j8
 ```
 * Build tester, output will be `Mavis`
 ```
-cmake .
-make -j8
-```
-* Build tester, output will be `Mavis`
-```
+cd test
 mkdir build
 cd build
 cmake ..
-cd test
-make
 ```
 * Execute the tester and compare golden `out`
 ```
 ./Mavis > test.out
-diff -s test.out golden.out
+diff -s test.out ../golden.out
 ```

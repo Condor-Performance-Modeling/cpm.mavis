@@ -6,6 +6,7 @@
 #include "impl/forms/CommonForms.h"
 #include "impl/forms/CompressedForms.h"
 #include "impl/forms/VectorForms.h"
+#include "impl/forms/AndeStarForms.h"
 
 #include <cinttypes>
 
