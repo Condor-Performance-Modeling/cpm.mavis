@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "mavis/Mavis.h"
 #include "mavis/MatchSet.hpp"
 #include "mavis/Tag.hpp"
@@ -15,6 +13,11 @@
 
 // For custom extraction
 #include "ExtractorDirectImplementations.hpp"
+
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <vector>
 
 using namespace std;
 using json = nlohmann::json;
@@ -39,28 +42,67 @@ struct ExampleTraceInfo
 
 using MavisType = Mavis<Instruction<uArchInfo>, uArchInfo>;
 
-void test_addigp(MavisType &mav_andes) {
 
-    Instruction<uArchInfo>::PtrType astar = nullptr;
+// -----------------------------------------------------------
+void test_andestar_tset(MavisType &mav_andes) {
+    runTSet(mav_andes, "../andestar.tset");
+}
+// -----------------------------------------------------------
+// -----------------------------------------------------------
+void test_andestart_addigp(MavisType &mav_andes) {
 
-    vector<uint32_t> vec_addigp = {
+    vector<uint32_t> vec = {
       0xee87930b,
       0x849f970b,
       0xf915180b,
       0xf5151c8b
     };
+    test_andestart_details(mav_andes,vec);
+}
+
+// -----------------------------------------------------------
+// -----------------------------------------------------------
+void test_andestart_lwgp(MavisType &mav_andes) {
+
+    vector<uint32_t> vec = {
+      0x813fab2b,
+      0x817fa72b,
+      0x983fa0ab,
+      0x987fa7ab
+    };
+
+    test_andestart_details(mav_andes,vec);
+}
+// -----------------------------------------------------------
+// -----------------------------------------------------------
+void test_andestart_sdgp(MavisType &mav_andes) {
+
+    vector<uint32_t> vec = {
+      0xf4f57bab,
+      0xf5157bab,
+      0xf5557bab
+    };
+
+    test_andestart_details(mav_andes,vec);
+}
+
+// -----------------------------------------------------------
+// -----------------------------------------------------------
+void test_andestart_details(MavisType &mav_andes,vector<uint32_t> &vec) {
+
+    Instruction<uArchInfo>::PtrType astar = nullptr;
 
     // See swizzle.py 
-    for(size_t i=0;i<vec_addigp.size();++i) {
-      astar = mav_andes.makeInst(vec_addigp[i], 0);
+    for(size_t i=0;i<vec.size();++i) {
+      astar = mav_andes.makeInst(vec[i], 0);
       assert(astar != nullptr);
 
       mavis::OpcodeInfo::PtrType dinfo = astar->getOpInfo();
 
-      cout<<" Input: 0x"<<hex<<setw(8)<<vec_addigp[i]<<endl;
+      cout<<" Input: 0x"<<hex<<setw(8)<<vec[i]<<endl;
 
       cout << "line " << dec << __LINE__ << ": " 
-           << "DASM: 0x"<<hex<<setw(8)<<vec_addigp[i]<<" = " << astar->dasmString() << endl;
+           << "DASM: 0x"<<hex<<setw(8)<<vec[i]<<" = " << astar->dasmString() << endl;
 
       cout << "line " << dec << __LINE__ << ": " 
            << "Signed-offset: 0x" 
@@ -323,10 +365,10 @@ int main() {
                              {});
     mavis_facade.switchContext("NEW");
     cout << mavis_facade;
-    runTSet(mavis_facade, "rv64.tset");
-    runTSet(mavis_facade, "rv64_bits.tset", {mavis::InstMetaData::ISAExtension::B});
-    runTSet(mavis_facade, "rv64_zcb.tset");
-    runTSet(mavis_facade, "rv64_zicond.tset");
+    runTSet(mavis_facade, "../rv64.tset");
+    runTSet(mavis_facade, "../rv64_bits.tset", {mavis::InstMetaData::ISAExtension::B});
+    runTSet(mavis_facade, "../rv64_zcb.tset");
+    runTSet(mavis_facade, "../rv64_zicond.tset");
 
     // Check implied extraction fields for zcb c.zext.[bhw] instructions
     // c.zext.b should have 0xFF implied immediate
@@ -1450,13 +1492,19 @@ int main() {
     catch (...)
     {
     }
+
+
     
-    MavisType mav_andes({"../../json/isa_andestar.json"}, {}, uid_init, anno_overrides);
+    MavisType mav_andes({"../../json/isa_andestar.json"},
+                        {"../../json/isa_rv64i.json"},
+                           uid_init, anno_overrides);
 
     cout << mav_andes;
 
-
-    test_addigp(mav_andes);
-
+    test_andestart_addigp(mav_andes);
+    test_andestart_lwgp(mav_andes);
+    test_andestart_sdgp(mav_andes);
+    test_andestar_tset(mav_andes);
+    
     return 0;
 }
