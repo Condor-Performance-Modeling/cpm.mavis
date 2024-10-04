@@ -1,27 +1,5 @@
 [
   {
-    "mnemonic" : "nop",
-    "tags" : ["i", "g"],
-    "form" : "ISHW",
-    "ignore" : [ "func7" ],
-    "xform" : "I",
-    "stencil" : "0x00",
-    "w-oper" : "all",
-    "type" : ["int", "arith"],
-    "l-oper" : "all"
-  },
-  {
-    "mnemonic" : "addiw",
-    "tags" : ["i", "g"],
-    "form" : "ISHW",
-    "ignore" : [ "func7" ],
-    "xform" : "I",
-    "stencil" : "0x1b",
-    "w-oper" : "all",
-    "type" : ["int", "arith"],
-    "l-oper" : "all"
-  },
-  {
     "_comment" : [
        "AndeStar V5 Performance Extension",
        "UM165-15, 2023-06-29",
@@ -31,8 +9,39 @@
     "form" : "AndeStar_Custom_0",
     "l-oper" : "all",
     "stencil" : "0x100b",
-    "tags" : ["i", "g"],
+    "tags" : ["andestar","v5","i", "g","rv32","rv64"],
     "type" : ["int", "arith"],
     "uid" : "1000"
+  },
+  {
+    "_comment" : [
+       "AndeStar V5 Performance Extension",
+       "UM165-15, 2023-06-29",
+       "GP-implied (X3) Load Word Signed Immediate"
+    ],
+    "mnemonic" : "lwgp",
+    "form"     : "AndeStar_Custom_1_LOAD",
+    "data"     : 32,
+    "l-oper"   : "all",
+    "stencil"  : "0x202b",
+    "tags"     : ["andestar","v5","i", "g","rv32","rv64"],
+    "type"     : ["int", "load"],
+    "uid"      : "1001"
+  },
+  {
+    "_comment" : [
+       "AndeStar V5 Performance Extension",
+       "UM165-15, 2023-06-29",
+       "GP-implied (X3) Store Double-word Immediate"
+    ],
+    "mnemonic" : "sdgp",
+    "form"     : "AndeStar_Custom_1_STORE",
+    "data"     : 64,
+    "l-oper"   : "all",
+    "stencil"  : "0x702b",
+    "tags"     : ["andestar","v5","i", "g","rv32","rv64"],
+    "type"     : ["int", "store"],
+    "uid"      : "1002"
   }
+
 ]
