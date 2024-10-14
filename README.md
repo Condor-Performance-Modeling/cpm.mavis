@@ -1,5 +1,8 @@
 # Mavis
 
+This is a fork of the original Mavis repo, renamed cpm.mavis.
+Original rights and licenses have not been modified.
+
 Mavis is a framework that allows decoding of the RISC-V ISA into
 custom instruction class types as well as custom extensions to those
 class types.
@@ -38,4 +41,9 @@ impl/forms/AndeStarExtractorForms.h  the dark arts begin here
 impl/FormRegistry.cpp                add the Ande* headers and name to map
 json/isa_andestar.json               instr definitions
 
+
 ```
+## Other status
+
+See EXT_STATUS.md in https://github.com/Condor-Performance-Modeling/dromajo
+For extension support
