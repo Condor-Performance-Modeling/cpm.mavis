@@ -46,6 +46,7 @@ namespace mavis {
         {Form_AndeStar_Custom_2::name,new Form<Form_AndeStar_Custom_2>()},
         {Form_AndeStar_Custom_2_BBx::name,new Form<Form_AndeStar_Custom_2_BBx>()},
         {Form_AndeStar_Custom_2_BxxC::name,new Form<Form_AndeStar_Custom_2_BxxC>()},
+        {Form_AndeStar_Custom_2_BFOx::name,new Form<Form_AndeStar_Custom_2_BFOx>()},
     };
 
     const FormBase* FormRegistry::findFormWrapper(const std::string& fname)

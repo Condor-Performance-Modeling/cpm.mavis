@@ -198,5 +198,30 @@ public:
     static const ImmediateType immediate_type;
 
 };
+// ------------------------------------------------------------------
+// AndeStar Form Custom 2 BFOx (EXTRACTION ONLY xform)
+//
+//      For BFOS and BFOZ
+// ------------------------------------------------------------------
+class Form_AndeStar_Custom_2_BFOx
+{
+public:
+    enum idType : uint32_t
+    {
+        MSB = 0,     // 31:26
+        LSB,         // 25:20
+        RS1,         // 19:15
+        RD,          // 11:7
+        __N
+    };
+
+    static const char * name;
+    static const FieldsType fields;
+    static const std::map<std::string, const Field &> fmap;
+    static const std::map<std::string, idType> imap;
+    static const FieldsType opcode_fields;
+    static const ImmediateType immediate_type;
+
+};
 
 } // namespace mavis

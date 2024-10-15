@@ -254,4 +254,41 @@ const FieldsType Form_AndeStar_Custom_2_BxxC::opcode_fields
 
 const ImmediateType Form_AndeStar_Custom_2_BxxC::immediate_type = ImmediateType::SIGNED;
 
+// ----------------------------------------------------------------------
+// Form_AndeStar_Custom_2_BFOx (For EXTRACTION ONLY, "xform")
+//
+//      For BFOS and BFOZ
+// ----------------------------------------------------------------------
+const char * Form_AndeStar_Custom_2_BFOx::name {"AndeStar_Custom_2_BFOx"};
+
+const FieldsType Form_AndeStar_Custom_2_BFOx::fields
+        {
+                Field("msb", 26,  6),
+                Field("lsb", 20,  6),
+                Field("rs1",  15,  5),
+                Field("rd",  7,  5),
+        };
+
+const std::map<std::string, const Field &> Form_AndeStar_Custom_2_BFOx::fmap
+        {
+                {"msb",  Form_AndeStar_Custom_2_BFOx::fields[Form_AndeStar_Custom_2_BFOx::idType::MSB]},
+                {"lsb",  Form_AndeStar_Custom_2_BFOx::fields[Form_AndeStar_Custom_2_BFOx::idType::LSB]},
+                {"rs1", Form_AndeStar_Custom_2_BFOx::fields[Form_AndeStar_Custom_2_BFOx::idType::RS1]},
+                {"rd", Form_AndeStar_Custom_2_BFOx::fields[Form_AndeStar_Custom_2_BFOx::idType::RD]},
+        };
+
+const std::map<std::string,Form_AndeStar_Custom_2_BFOx::idType>
+        Form_AndeStar_Custom_2_BFOx::imap
+        {
+                {"msb",  Form_AndeStar_Custom_2_BFOx::idType::MSB},
+                {"lsb",   Form_AndeStar_Custom_2_BFOx::idType::LSB},
+                {"rs1", Form_AndeStar_Custom_2_BFOx::idType::RS1},
+                {"rd", Form_AndeStar_Custom_2_BFOx::idType::RD},
+        };
+
+const FieldsType Form_AndeStar_Custom_2_BFOx::opcode_fields
+        {};
+
+const ImmediateType Form_AndeStar_Custom_2_BFOx::immediate_type = ImmediateType::NONE;
+
 } // namespace mavis

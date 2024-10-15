@@ -610,7 +610,7 @@ public:
                 extract_(Form_AndeStar_Custom_2_BBx::idType::IMM4_1, icode);
     }
 
-    uint64_t getCIMM(const Opcode icode) const
+    static inline uint64_t getCIMM(const Opcode icode)
     {
         return (extract_(Form_AndeStar_Custom_2_BBx::idType::CIMM5, icode) << 5ull) |
                 extract_(Form_AndeStar_Custom_2_BBx::idType::CIMM4_0, icode);
@@ -722,7 +722,7 @@ public:
                extract_(Form_AndeStar_Custom_2_BxxC::idType::IMM4_1, icode);
     }
 
-    uint64_t getCIMM(const Opcode icode) const
+    static inline uint64_t getCIMM(const Opcode icode)
     {
         return (extract_(Form_AndeStar_Custom_2_BxxC::idType::CIMM6, icode) << 6ull) |
                (extract_(Form_AndeStar_Custom_2_BxxC::idType::CIMM5, icode) << 5ull) |
@@ -769,6 +769,145 @@ public:
 
 private:
     Extractor<Form_AndeStar_Custom_2_BxxC>(const uint64_t ffmask, const uint64_t fset) :
+            fixed_field_mask_(ffmask)
+    {}
+
+    uint64_t fixed_field_mask_ = 0;
+};
+
+// ---------------------------------------------------------------------------
+// AndeStar_Custom_2_BFOx (EXTRACTION ONLY) "xform"
+//
+//      For BFOS and BFOZ
+// ---------------------------------------------------------------------------
+template<>
+class Extractor<Form_AndeStar_Custom_2_BFOx> : public ExtractorBase<Form_AndeStar_Custom_2_BFOx>
+{
+public:
+    Extractor() = default;
+
+    ExtractorIF::PtrType specialCaseClone(const uint64_t ffmask, const uint64_t fset) const override
+    {
+        return ExtractorIF::PtrType(new Extractor<Form_AndeStar_Custom_2_BFOx>(ffmask, fset));
+    }
+
+    uint64_t getSourceRegs(const Opcode icode) const override
+    {
+        return extractUnmaskedIndexBit_(Form_AndeStar_Custom_2_BFOx::idType::RS1, icode, fixed_field_mask_);
+    }
+
+    uint64_t getSourceOperTypeRegs(const Opcode icode,
+                                   const InstMetaData::PtrType &meta,
+                                   InstMetaData::OperandTypes kind) const override
+    {
+        if (meta->isNoneOperandType(kind)) {
+            return 0;
+        } else if (meta->isAllOperandType(kind)) {
+            return getSourceRegs(icode);
+        } else {
+            uint64_t result = 0;
+            if (meta->isOperandType(InstMetaData::OperandFieldID::RS1, kind)) {
+                result |= extractUnmaskedIndexBit_(Form_AndeStar_Custom_2_BFOx::idType::RS1, icode, fixed_field_mask_);
+            }
+            return result;
+        }
+    }
+
+    OperandInfo getSourceOperandInfo(Opcode icode, const InstMetaData::PtrType& meta,
+                                     bool suppress_x0 = false) const override
+    {
+        OperandInfo olist;
+        appendUnmaskedOperandInfo_(olist, icode, meta, InstMetaData::OperandFieldID::RS1,
+                                   fixed_field_mask_, Form_AndeStar_Custom_2_BFOx::idType::RS1,
+                                   false, suppress_x0);
+        return olist;
+    }
+
+    uint64_t getDestRegs(const Opcode icode) const override
+    {
+        return extractUnmaskedIndexBit_(Form_AndeStar_Custom_2_BFOx::idType::RD, icode, fixed_field_mask_);
+    }
+
+    uint64_t getDestOperTypeRegs(const Opcode icode,
+                                 const InstMetaData::PtrType &meta, InstMetaData::OperandTypes kind) const override
+    {
+        if (meta->isNoneOperandType(kind)) {
+            return 0;
+        } else if (meta->isAllOperandType(kind)) {
+            return getDestRegs(icode);
+        } else {
+            uint64_t result = 0;
+            if (meta->isOperandType(InstMetaData::OperandFieldID::RD, kind)) {
+                result |= extractUnmaskedIndexBit_(Form_AndeStar_Custom_2_BFOx::idType::RD, icode, fixed_field_mask_);
+            }
+            return result;
+        }
+    }
+
+    OperandInfo getDestOperandInfo(Opcode icode, const InstMetaData::PtrType& meta,
+                                   bool suppress_x0 = false) const override
+    {
+        OperandInfo olist;
+        appendUnmaskedOperandInfo_(olist, icode, meta, InstMetaData::OperandFieldID::RD,
+                                   fixed_field_mask_, Form_AndeStar_Custom_2_BFOx::idType::RD,
+                                   false, suppress_x0);
+        return olist;
+    }
+
+    static inline uint64_t getMSB(Opcode icode)
+    {
+        return extract_(Form_AndeStar_Custom_2_BFOx::idType::MSB, icode);
+    }
+
+    static inline uint64_t getLSB(Opcode icode)
+    {
+        return extract_(Form_AndeStar_Custom_2_BFOx::idType::LSB, icode);
+    }
+
+    uint64_t getSpecialField(SpecialField sfid, Opcode icode) const override
+    {
+        switch(sfid) {
+            case SpecialField::MSB:
+                return getMSB(icode);
+            case SpecialField::LSB:
+                return getLSB(icode);
+            default:
+                return ExtractorBase::getSpecialField(sfid, icode);
+        }
+    }
+
+    ImmediateType getImmediateType() const override
+    {
+        return ImmediateType::NONE;
+    }
+
+    using ExtractorIF::dasmString; // tell the compiler all dasmString
+    // overloads are considered
+    std::string dasmString(const std::string &mnemonic, const Opcode icode) const override
+    {
+        std::stringstream ss;
+        ss << mnemonic
+           << "\t" << extract_(Form_AndeStar_Custom_2_BFOx::idType::RD, icode & ~fixed_field_mask_)
+           << ", " << extract_(Form_AndeStar_Custom_2_BFOx::idType::RS1, icode & ~fixed_field_mask_)
+           << ", 0x" << std::hex << getMSB(icode)
+           << ", 0x" << std::hex << getLSB(icode);
+        return ss.str();
+    }
+
+    std::string dasmString(const std::string &mnemonic, const Opcode icode, const InstMetaData::PtrType& meta) const override
+    {
+        std::stringstream ss;
+        ss << mnemonic << "\t"
+           << dasmFormatRegList_(meta, icode, fixed_field_mask_,
+                                 { { Form_AndeStar_Custom_2_BFOx::idType::RD, InstMetaData::OperandFieldID::RD },
+                                        { Form_AndeStar_Custom_2_BFOx::idType::RS1, InstMetaData::OperandFieldID::RS1 } })
+           << ", 0x" << std::hex << getMSB(icode)
+           << ", 0x" << std::hex << getLSB(icode);
+        return ss.str();
+    }
+
+private:
+    Extractor<Form_AndeStar_Custom_2_BFOx>(const uint64_t ffmask, const uint64_t fset) :
             fixed_field_mask_(ffmask)
     {}
 
