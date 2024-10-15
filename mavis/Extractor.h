@@ -57,8 +57,8 @@ public:
         { "wd",    SpecialField::WD},
         { "hint",  SpecialField::HINT},
         { "cimm",  SpecialField::CIMM},
-        { "msb",   SpecialField::MSB},
-        { "lsb",   SpecialField::LSB}
+        { "msb",  SpecialField::MSB},
+        { "lsb",  SpecialField::LSB}
     };
 
 private:
@@ -326,13 +326,6 @@ public:
     }
 
 protected:
-
-    ExtractorBase() = default;
-
-    ExtractorBase(uint64_t fixed_field_mask) : fixed_field_mask_(fixed_field_mask) {}
-
-    // Common to all Forms
-    const uint64_t fixed_field_mask_ = 0;
 
     static inline uint64_t extract_(const typename FormType::idType fid, const Opcode icode)
     {
