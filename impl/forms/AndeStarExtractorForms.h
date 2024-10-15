@@ -542,11 +542,6 @@ public:
         return mnemonic;
     }
 
-    std::string dasmString(const std::string &mnemonic, const Opcode icode, const InstMetaData::PtrType& meta) const override
-    {
-        return dasmString(mnemonic, icode);
-    }
-
 private:
     Extractor<Form_AndeStar_Custom_2>(const uint64_t ffmask, const uint64_t fset) :
             fixed_field_mask_(ffmask)
