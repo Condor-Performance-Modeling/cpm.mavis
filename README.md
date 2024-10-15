@@ -22,6 +22,7 @@ cd test
 mkdir build
 cd build
 cmake ..
+make -j
 ```
 * Execute the tester and compare golden `out`
 ```
