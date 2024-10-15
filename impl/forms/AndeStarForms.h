@@ -304,11 +304,11 @@ public:
 };
 
 // ------------------------------------------------------------------
-// AndeStar Form Custom 2 LEA (EXTRACTION ONLY xform)
+// AndeStar Form Custom 2 XDEF (EXTRACTION ONLY default xform)
 //
-//      For LEA* instructions
+//      For LEA* and FIND instructions
 // ------------------------------------------------------------------
-class Form_AndeStar_Custom_2_LEA
+class Form_AndeStar_Custom_2_XDEF
 {
 public:
     enum idType : uint32_t

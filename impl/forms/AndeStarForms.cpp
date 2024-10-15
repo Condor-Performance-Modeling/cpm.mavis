@@ -419,37 +419,37 @@ const ImmediateType Form_AndeStar_Custom_2_BFOx::immediate_type = ImmediateType:
 
 
 // ----------------------------------------------------------------------
-// Form_AndeStar_Custom_2_LEA (For EXTRACTION ONLY, "xform")
+// Form_AndeStar_Custom_2_XDEF (For EXTRACTION ONLY, default "xform")
 //
-//      For LEA* instructions
+//      For LEA* and FIND instructions
 // ----------------------------------------------------------------------
-const char * Form_AndeStar_Custom_2_LEA::name {"AndeStar_Custom_2_LEA"};
+const char * Form_AndeStar_Custom_2_XDEF::name {"AndeStar_Custom_2_XDEF"};
 
-const FieldsType Form_AndeStar_Custom_2_LEA::fields
+const FieldsType Form_AndeStar_Custom_2_XDEF::fields
         {
                 Field("rs2", 20,  5),
                 Field("rs1",  15,  5),
                 Field("rd",  7,  5),
         };
 
-const std::map<std::string, const Field &> Form_AndeStar_Custom_2_LEA::fmap
+const std::map<std::string, const Field &> Form_AndeStar_Custom_2_XDEF::fmap
         {
-                {"rs2", Form_AndeStar_Custom_2_LEA::fields[Form_AndeStar_Custom_2_LEA::idType::RS2]},
-                {"rs1", Form_AndeStar_Custom_2_LEA::fields[Form_AndeStar_Custom_2_LEA::idType::RS1]},
-                {"rd", Form_AndeStar_Custom_2_LEA::fields[Form_AndeStar_Custom_2_LEA::idType::RD]},
+                {"rs2", Form_AndeStar_Custom_2_XDEF::fields[Form_AndeStar_Custom_2_XDEF::idType::RS2]},
+                {"rs1", Form_AndeStar_Custom_2_XDEF::fields[Form_AndeStar_Custom_2_XDEF::idType::RS1]},
+                {"rd",  Form_AndeStar_Custom_2_XDEF::fields[Form_AndeStar_Custom_2_XDEF::idType::RD]},
         };
 
-const std::map<std::string,Form_AndeStar_Custom_2_LEA::idType>
-        Form_AndeStar_Custom_2_LEA::imap
+const std::map<std::string,Form_AndeStar_Custom_2_XDEF::idType>
+        Form_AndeStar_Custom_2_XDEF::imap
         {
-                {"rs2", Form_AndeStar_Custom_2_LEA::idType::RS2},
-                {"rs1", Form_AndeStar_Custom_2_LEA::idType::RS1},
-                {"rd", Form_AndeStar_Custom_2_LEA::idType::RD},
+                {"rs2", Form_AndeStar_Custom_2_XDEF::idType::RS2},
+                {"rs1", Form_AndeStar_Custom_2_XDEF::idType::RS1},
+                {"rd",  Form_AndeStar_Custom_2_XDEF::idType::RD},
         };
 
-const FieldsType Form_AndeStar_Custom_2_LEA::opcode_fields
+const FieldsType Form_AndeStar_Custom_2_XDEF::opcode_fields
         {};
 
-const ImmediateType Form_AndeStar_Custom_2_LEA::immediate_type = ImmediateType::NONE;
+const ImmediateType Form_AndeStar_Custom_2_XDEF::immediate_type = ImmediateType::NONE;
 
 } // namespace mavis
