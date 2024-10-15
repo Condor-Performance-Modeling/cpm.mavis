@@ -198,6 +198,43 @@ public:
         return ExtractorIF::PtrType(new Extractor<Form_AndeStar_Custom_0_LBYTE>(ffmask, fset));
     }
 
+    uint64_t getSourceRegs(const Opcode icode) const override
+    {
+        return (1ull << REGISTER_ANDES_GP); //implied global pointer
+    }
+
+    uint64_t getSourceOperTypeRegs(const Opcode icode,
+                                   const InstMetaData::PtrType &meta, InstMetaData::OperandTypes kind) const override
+    {
+        if (meta->isNoneOperandType(kind)) {
+            return 0;
+        } else if (meta->isAllOperandType(kind)) {
+            return getSourceRegs(icode);
+        } else {
+            uint64_t result = 0;
+            if (meta->isOperandType(InstMetaData::OperandFieldID::RS1, kind)) {
+                result |= (1ull << REGISTER_ANDES_GP);
+            }
+            return result;
+        }
+    }
+
+    uint64_t getSourceAddressRegs(const Opcode icode) const override
+    {
+        return getSourceRegs(icode);
+    }
+
+    OperandInfo getSourceOperandInfo(Opcode icode, const InstMetaData::PtrType& meta,
+                                     bool suppress_x0 = false) const override
+    {
+        OperandInfo olist;
+        //ADDIGP has implied global pointer, typ. X3, this is the only source
+        //using RS1 as the type index
+        olist.addElement(InstMetaData::OperandFieldID::RS1, meta->getOperandType(InstMetaData::OperandFieldID::RS1),
+                         REGISTER_ANDES_GP, false);
+        return olist;
+    }
+
     uint64_t getDestRegs(const Opcode icode) const override
     {
         return extractUnmaskedIndexBit_(Form_AndeStar_Custom_0_LBYTE::idType::RD, icode, fixed_field_mask_);
@@ -278,6 +315,120 @@ private:
     uint64_t fixed_field_mask_ = 0;
 };
 
+// ---------------------------------------------------------------------------
+// AndeStar_Custom_0_SBYTE (EXTRACTION ONLY) "xform"
+//
+//      For SBGP
+// ---------------------------------------------------------------------------
+template<>
+class Extractor<Form_AndeStar_Custom_0_SBYTE> : public ExtractorBase<Form_AndeStar_Custom_0_SBYTE>
+{
+public:
+    Extractor() = default;
+
+    ExtractorIF::PtrType specialCaseClone(const uint64_t ffmask, const uint64_t fset) const override
+    {
+        return ExtractorIF::PtrType(new Extractor<Form_AndeStar_Custom_0_SBYTE>(ffmask, fset));
+    }
+
+    uint64_t getSourceRegs(const Opcode icode) const override
+    {
+        return extractUnmaskedIndexBit_(Form_AndeStar_Custom_0_SBYTE::idType::RS2, icode, fixed_field_mask_) |
+                (1ull << REGISTER_ANDES_GP); //implied global pointer
+    }
+
+    uint64_t getSourceOperTypeRegs(const Opcode icode,
+                                   const InstMetaData::PtrType &meta, InstMetaData::OperandTypes kind) const override
+    {
+        if (meta->isNoneOperandType(kind)) {
+            return 0;
+        } else if (meta->isAllOperandType(kind)) {
+            return getSourceRegs(icode);
+        } else {
+            uint64_t result = 0;
+            if (meta->isOperandType(InstMetaData::OperandFieldID::RS1, kind)) {
+                result |= (1ull << REGISTER_ANDES_GP);
+            }
+            if (meta->isOperandType(InstMetaData::OperandFieldID::RS2, kind)) {
+                result |= extractUnmaskedIndexBit_(Form_AndeStar_Custom_0_SBYTE::idType::RS2, icode, fixed_field_mask_);
+            }
+            return result;
+        }
+    }
+
+    uint64_t getSourceAddressRegs(const Opcode icode) const override
+    {
+        return (1ull << REGISTER_ANDES_GP);
+    }
+
+    uint64_t getSourceDataRegs(const Opcode icode) const override
+    {
+        return extractUnmaskedIndexBit_(Form_AndeStar_Custom_0_SBYTE::idType::RS2, icode, fixed_field_mask_);
+    }
+
+    OperandInfo getSourceOperandInfo(Opcode icode, const InstMetaData::PtrType& meta,
+                                     bool suppress_x0 = false) const override
+    {
+        OperandInfo olist;
+        //ADDIGP has implied global pointer, typ. X3, this is the only source
+        //using RS1 as the type index
+        olist.addElement(InstMetaData::OperandFieldID::RS1, meta->getOperandType(InstMetaData::OperandFieldID::RS1),
+                         REGISTER_ANDES_GP, false);
+        appendUnmaskedOperandInfo_(olist, icode, meta, InstMetaData::OperandFieldID::RS2,
+                                   fixed_field_mask_, Form_AndeStar_Custom_0_SBYTE::idType::RS2,
+                                   true, suppress_x0);
+        return olist;
+    }
+
+    ImmediateType getImmediateType() const override
+    {
+        return ImmediateType::SIGNED;
+    }
+
+    uint64_t getImmediate(const Opcode icode) const override
+    {
+        return (extract_(Form_AndeStar_Custom_0_SBYTE::idType::IMM17, icode) << 17ull) |
+               (extract_(Form_AndeStar_Custom_0_SBYTE::idType::IMM16_15, icode) << 15ull) |
+               (extract_(Form_AndeStar_Custom_0_SBYTE::idType::IMM14_12, icode) << 12ull) |
+               (extract_(Form_AndeStar_Custom_0_SBYTE::idType::IMM11, icode) << 11ull) |
+               (extract_(Form_AndeStar_Custom_0_SBYTE::idType::IMM10_5, icode) << 5ull) |
+               (extract_(Form_AndeStar_Custom_0_SBYTE::idType::IMM4_1, icode) << 1ull) |
+                extract_(Form_AndeStar_Custom_0_SBYTE::idType::IMM0, icode);
+    }
+
+    int64_t getSignedOffset(const Opcode icode) const override
+    {
+        return signExtend_(getImmediate(icode), 17);
+    }
+
+    using ExtractorIF::dasmString; // tell the compiler all dasmString
+    // overloads are considered
+    std::string dasmString(const std::string &mnemonic, const Opcode icode) const override
+    {
+        std::stringstream ss;
+        ss << mnemonic
+           << "\t" << extract_(Form_AndeStar_Custom_0_SBYTE::idType::RS2, icode & ~fixed_field_mask_)
+           << ", +0x" << std::hex << getSignedOffset(icode);
+        return ss.str();
+    }
+
+    std::string dasmString(const std::string &mnemonic, const Opcode icode, const InstMetaData::PtrType& meta) const override
+    {
+        std::stringstream ss;
+        ss << mnemonic << "\t"
+           << dasmFormatRegList_(meta, icode, fixed_field_mask_,
+                                 { { Form_AndeStar_Custom_0_SBYTE::idType::RS2, InstMetaData::OperandFieldID::RD } })
+           << ", +0x" << std::hex << getSignedOffset(icode);
+        return ss.str();
+    }
+
+private:
+    Extractor<Form_AndeStar_Custom_0_SBYTE>(const uint64_t ffmask, const uint64_t fset) :
+            fixed_field_mask_(ffmask)
+    {}
+
+    uint64_t fixed_field_mask_ = 0;
+};
 
 // ---------------------------------------------------------------------------
 // AndeStar_Custom_1 (DECODE ONLY) form

@@ -335,6 +335,7 @@
     "mnemonic" : "sbgp",
     "data" : 8,
     "form" : "AndeStar_Custom_0",
+    "xform" : "AndeStar_Custom_0_SBYTE",
     "l-oper" : "all",
     "stencil" : "0x300b",
     "tags" : ["andestar","v5","rv32","rv64"],
