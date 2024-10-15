@@ -133,15 +133,7 @@ public:
                 return extract_(Form_AMO::idType::VM, icode);
             case SpecialField::WD:
                 return extract_(Form_AMO::idType::WD, icode);
-            case SpecialField::AVL:
-            case SpecialField::RM:
-            case SpecialField::CSR:
-            case SpecialField::FM:
-            case SpecialField::NF:
-            case SpecialField::PRED:
-            case SpecialField::HINT:
-            case SpecialField::SUCC:
-            case SpecialField::__N:
+            default:
                 return ExtractorBase::getSpecialField(sfid, icode);
         }
         return 0;
@@ -1531,18 +1523,7 @@ public:
         switch(sfid) {
             case SpecialField::CSR:
                 return extract_(Form_CSR::idType::CSR, icode);
-            case SpecialField::AQ:
-            case SpecialField::AVL:
-            case SpecialField::FM:
-            case SpecialField::NF:
-            case SpecialField::PRED:
-            case SpecialField::HINT:
-            case SpecialField::RL:
-            case SpecialField::RM:
-            case SpecialField::SUCC:
-            case SpecialField::VM:
-            case SpecialField::WD:
-            case SpecialField::__N:
+            default:
                 return ExtractorBase::getSpecialField(sfid, icode);
         }
         return 0;
@@ -1635,18 +1616,7 @@ public:
         switch(sfid) {
             case SpecialField::CSR:
                 return extract_(Form_CSRI::idType::CSR, icode);
-            case SpecialField::AQ:
-            case SpecialField::AVL:
-            case SpecialField::FM:
-            case SpecialField::NF:
-            case SpecialField::PRED:
-            case SpecialField::HINT:
-            case SpecialField::RL:
-            case SpecialField::RM:
-            case SpecialField::SUCC:
-            case SpecialField::VM:
-            case SpecialField::WD:
-            case SpecialField::__N:
+            default:
                 return ExtractorBase::getSpecialField(sfid, icode);
         }
         return 0;
@@ -1770,15 +1740,7 @@ public:
                 return extract_(Form_FENCE::idType::PRED, icode);
             case SpecialField::SUCC:
                 return extract_(Form_FENCE::idType::SUCC, icode);
-            case SpecialField::AQ:
-            case SpecialField::AVL:
-            case SpecialField::CSR:
-            case SpecialField::NF:
-            case SpecialField::RL:
-            case SpecialField::RM:
-            case SpecialField::VM:
-            case SpecialField::WD:
-            case SpecialField::__N:
+            default:
                 return ExtractorBase::getSpecialField(sfid, icode);
         }
         return 0;
@@ -2465,18 +2427,7 @@ public:
         switch(sfid) {
             case SpecialField::RM:
                 return extract_(Form_Rfloat::idType::RM, icode);
-            case SpecialField::AQ:
-            case SpecialField::AVL:
-            case SpecialField::CSR:
-            case SpecialField::FM:
-            case SpecialField::NF:
-            case SpecialField::PRED:
-            case SpecialField::HINT:
-            case SpecialField::RL:
-            case SpecialField::SUCC:
-            case SpecialField::VM:
-            case SpecialField::WD:
-            case SpecialField::__N:
+            default:
                 return ExtractorBase::getSpecialField(sfid, icode);
         }
         return 0;
@@ -2616,18 +2567,7 @@ public:
         switch(sfid) {
             case SpecialField::RM:
                 return extract_(Form_R4::idType::RM, icode);
-            case SpecialField::AQ:
-            case SpecialField::AVL:
-            case SpecialField::CSR:
-            case SpecialField::FM:
-            case SpecialField::NF:
-            case SpecialField::PRED:
-            case SpecialField::HINT:
-            case SpecialField::RL:
-            case SpecialField::SUCC:
-            case SpecialField::VM:
-            case SpecialField::WD:
-            case SpecialField::__N:
+            default:
                 return ExtractorBase::getSpecialField(sfid, icode);
         }
         return 0;
@@ -2968,18 +2908,7 @@ public:
                 } else {
                     return extract_(Form_V::idType::VM, icode);
                 }
-            case SpecialField::RM:
-            case SpecialField::AQ:
-            case SpecialField::AVL:
-            case SpecialField::CSR:
-            case SpecialField::FM:
-            case SpecialField::NF:
-            case SpecialField::PRED:
-            case SpecialField::HINT:
-            case SpecialField::RL:
-            case SpecialField::SUCC:
-            case SpecialField::WD:
-            case SpecialField::__N:
+            default:
                 return ExtractorBase::getSpecialField(sfid, icode);
         }
         return 0;
@@ -3127,17 +3056,7 @@ public:
                 } else {
                     return extract_(Form_VF_mem::idType::VM, icode);
                 }
-            case SpecialField::RM:
-            case SpecialField::AQ:
-            case SpecialField::AVL:
-            case SpecialField::CSR:
-            case SpecialField::FM:
-            case SpecialField::PRED:
-            case SpecialField::HINT:
-            case SpecialField::RL:
-            case SpecialField::SUCC:
-            case SpecialField::WD:
-            case SpecialField::__N:
+            default:
                 return ExtractorBase::getSpecialField(sfid, icode);
         }
         return 0;
@@ -3292,19 +3211,7 @@ public:
     uint64_t getSpecialField(SpecialField sfid, Opcode icode) const override
     {
         switch(sfid) {
-            case SpecialField::AQ:
-            case SpecialField::AVL:
-            case SpecialField::CSR:
-            case SpecialField::FM:
-            case SpecialField::NF:
-            case SpecialField::PRED:
-            case SpecialField::HINT:
-            case SpecialField::RL:
-            case SpecialField::RM:
-            case SpecialField::SUCC:
-            case SpecialField::VM:
-            case SpecialField::WD:
-            case SpecialField::__N:
+            default:
                 return ExtractorBase::getSpecialField(sfid, icode);
         }
         return 0;
@@ -3395,18 +3302,7 @@ public:
         switch(sfid) {
             case SpecialField::AVL:
                 return extract_(Form_V_vsetivli::idType::AVL, icode);
-            case SpecialField::AQ:
-            case SpecialField::CSR:
-            case SpecialField::FM:
-            case SpecialField::NF:
-            case SpecialField::PRED:
-            case SpecialField::HINT:
-            case SpecialField::RL:
-            case SpecialField::RM:
-            case SpecialField::SUCC:
-            case SpecialField::VM:
-            case SpecialField::WD:
-            case SpecialField::__N:
+            default:
                 return ExtractorBase::getSpecialField(sfid, icode);
         }
         return 0;
@@ -3524,19 +3420,7 @@ public:
     uint64_t getSpecialField(SpecialField sfid, Opcode icode) const override
     {
         switch(sfid) {
-            case SpecialField::AQ:
-            case SpecialField::AVL:
-            case SpecialField::CSR:
-            case SpecialField::FM:
-            case SpecialField::NF:
-            case SpecialField::PRED:
-            case SpecialField::HINT:
-            case SpecialField::RL:
-            case SpecialField::RM:
-            case SpecialField::SUCC:
-            case SpecialField::VM:
-            case SpecialField::WD:
-            case SpecialField::__N:
+            default:
                 return ExtractorBase::getSpecialField(sfid, icode);
         }
         return 0;
@@ -3658,18 +3542,7 @@ public:
                 } else {
                     return extract_(Form_V_uimm6::idType::VM, icode);
                 }
-            case SpecialField::RM:
-            case SpecialField::AQ:
-            case SpecialField::AVL:
-            case SpecialField::CSR:
-            case SpecialField::FM:
-            case SpecialField::NF:
-            case SpecialField::PRED:
-            case SpecialField::HINT:
-            case SpecialField::RL:
-            case SpecialField::SUCC:
-            case SpecialField::WD:
-            case SpecialField::__N:
+            default:
                 return ExtractorBase::getSpecialField(sfid, icode);
         }
         return 0;

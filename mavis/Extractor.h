@@ -37,6 +37,9 @@ public:
         VM,         // VM bit in vector insts
         WD,         // WD in vector atomic insts
         HINT,       // HINT in prefetch operations
+        CIMM,       // AndeStar CIMM (bit position for branch instructions)
+        MSB,        // AndeStar MSB field (BFOS/BFOZ)
+        LSB,        // AndeStar LSB field (BFOS/BFOZ)
         __N
     };
 
@@ -52,7 +55,10 @@ public:
         { "succ",  SpecialField::SUCC},
         { "vm",    SpecialField::VM},
         { "wd",    SpecialField::WD},
-        { "hint",  SpecialField::HINT}
+        { "hint",  SpecialField::HINT},
+        { "cimm",  SpecialField::CIMM},
+        { "msb",  SpecialField::MSB},
+        { "lsb",  SpecialField::LSB}
     };
 
 private:
@@ -68,7 +74,10 @@ private:
         "succ",
         "vm",
         "wd",
-        "hint"
+        "hint",
+        "cimm",
+        "msb",
+        "lsb"
     };
 
 public:
@@ -277,6 +286,12 @@ public:
                 throw UnsupportedExtractorSpecialFieldID("WD", icode);
             case SpecialField::HINT:
                 throw UnsupportedExtractorSpecialFieldID("HINT", icode);
+            case SpecialField::CIMM:
+                throw UnsupportedExtractorSpecialFieldID("CIMM", icode);
+            case SpecialField::MSB:
+                throw UnsupportedExtractorSpecialFieldID("MSB", icode);
+            case SpecialField::LSB:
+                throw UnsupportedExtractorSpecialFieldID("LSB", icode);
             case SpecialField::__N:
                 throw InvalidExtractorSpecialFieldID("__N", icode);
         }
