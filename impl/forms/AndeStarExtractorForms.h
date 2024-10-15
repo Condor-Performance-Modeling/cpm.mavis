@@ -182,6 +182,103 @@ private:
     uint64_t fixed_field_mask_ = 0;
 };
 
+// ---------------------------------------------------------------------------
+// AndeStar_Custom_0_LBYTE (EXTRACTION ONLY) "xform"
+//
+//      For LBGP and LBUGP
+// ---------------------------------------------------------------------------
+template<>
+class Extractor<Form_AndeStar_Custom_0_LBYTE> : public ExtractorBase<Form_AndeStar_Custom_0_LBYTE>
+{
+public:
+    Extractor() = default;
+
+    ExtractorIF::PtrType specialCaseClone(const uint64_t ffmask, const uint64_t fset) const override
+    {
+        return ExtractorIF::PtrType(new Extractor<Form_AndeStar_Custom_0_LBYTE>(ffmask, fset));
+    }
+
+    uint64_t getDestRegs(const Opcode icode) const override
+    {
+        return extractUnmaskedIndexBit_(Form_AndeStar_Custom_0_LBYTE::idType::RD, icode, fixed_field_mask_);
+    }
+
+    uint64_t getDestOperTypeRegs(const Opcode icode,
+                                 const InstMetaData::PtrType &meta, InstMetaData::OperandTypes kind) const override
+    {
+        if (meta->isNoneOperandType(kind)) {
+            return 0;
+        } else if (meta->isAllOperandType(kind)) {
+            return getDestRegs(icode);
+        } else {
+            uint64_t result = 0;
+            if (meta->isOperandType(InstMetaData::OperandFieldID::RD, kind)) {
+                result |= extractUnmaskedIndexBit_(Form_AndeStar_Custom_0_LBYTE::idType::RD, icode, fixed_field_mask_);
+            }
+            return result;
+        }
+    }
+
+    OperandInfo getDestOperandInfo(Opcode icode, const InstMetaData::PtrType& meta,
+                                   bool suppress_x0 = false) const override
+    {
+        OperandInfo olist;
+        appendUnmaskedOperandInfo_(olist, icode, meta, InstMetaData::OperandFieldID::RD,
+                                   fixed_field_mask_, Form_AndeStar_Custom_0_LBYTE::idType::RD,
+                                   false, suppress_x0);
+        return olist;
+    }
+
+    ImmediateType getImmediateType() const override
+    {
+        return ImmediateType::SIGNED;
+    }
+
+    uint64_t getImmediate(const Opcode icode) const override
+    {
+        return (extract_(Form_AndeStar_Custom_0_LBYTE::idType::IMM17, icode) << 17ull) |
+               (extract_(Form_AndeStar_Custom_0_LBYTE::idType::IMM16_15, icode) << 15ull) |
+               (extract_(Form_AndeStar_Custom_0_LBYTE::idType::IMM14_12, icode) << 12ull) |
+               (extract_(Form_AndeStar_Custom_0_LBYTE::idType::IMM11, icode) << 11ull) |
+               (extract_(Form_AndeStar_Custom_0_LBYTE::idType::IMM10_1, icode) << 1ull) |
+                extract_(Form_AndeStar_Custom_0_LBYTE::idType::IMM0, icode);
+    }
+
+    int64_t getSignedOffset(const Opcode icode) const override
+    {
+        return signExtend_(getImmediate(icode), 17);
+    }
+
+    using ExtractorIF::dasmString; // tell the compiler all dasmString
+    // overloads are considered
+    std::string dasmString(const std::string &mnemonic, const Opcode icode) const override
+    {
+        std::stringstream ss;
+        ss << mnemonic
+           << "\t" << extract_(Form_AndeStar_Custom_0_LBYTE::idType::RD, icode & ~fixed_field_mask_)
+           << ", +0x" << std::hex << getSignedOffset(icode);
+        return ss.str();
+    }
+
+    std::string dasmString(const std::string &mnemonic, const Opcode icode, const InstMetaData::PtrType& meta) const override
+    {
+        std::stringstream ss;
+        ss << mnemonic << "\t"
+           << dasmFormatRegList_(meta, icode, fixed_field_mask_,
+                                 { { Form_AndeStar_Custom_0_LBYTE::idType::RD, InstMetaData::OperandFieldID::RD } })
+           << ", +0x" << std::hex << getSignedOffset(icode);
+        return ss.str();
+    }
+
+private:
+    Extractor<Form_AndeStar_Custom_0_LBYTE>(const uint64_t ffmask, const uint64_t fset) :
+            fixed_field_mask_(ffmask)
+    {}
+
+    uint64_t fixed_field_mask_ = 0;
+};
+
+
 // --------------------------------------------------------------------------- 
 // Form_AndeStar_Custom_1_LOAD - Form Extractor
 //

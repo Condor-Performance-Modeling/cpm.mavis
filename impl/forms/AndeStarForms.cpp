@@ -41,6 +41,52 @@ const FieldsType Form_AndeStar_Custom_0::opcode_fields
 const ImmediateType Form_AndeStar_Custom_0::immediate_type = ImmediateType::SIGNED;
 
 // ----------------------------------------------------------------------
+// Form_AndeStar_Custom_0_LBYTE (EXTRACTION ONLY, xform)
+//
+//      for LBGP and LBUGP
+// ----------------------------------------------------------------------
+const char * Form_AndeStar_Custom_0_LBYTE::name {"AndeStar_Custom_0_LBYTE"};
+
+const FieldsType Form_AndeStar_Custom_0_LBYTE::fields
+        {
+                Field("imm17", 31, 1),
+                Field("imm10_1", 21, 10),
+                Field("imm11", 20,  1),
+                Field("imm14_12", 17,  3),
+                Field("imm16_15", 15,  2),
+                Field("imm0", 14,  1),
+                Field("rd",     7,  5)
+        };
+
+const std::map<std::string, const Field &> Form_AndeStar_Custom_0_LBYTE::fmap
+        {
+                {"imm17", Form_AndeStar_Custom_0_LBYTE::fields[Form_AndeStar_Custom_0_LBYTE::idType::IMM17]},
+                {"imm10_1", Form_AndeStar_Custom_0_LBYTE::fields[Form_AndeStar_Custom_0_LBYTE::idType::IMM10_1]},
+                {"imm11", Form_AndeStar_Custom_0_LBYTE::fields[Form_AndeStar_Custom_0_LBYTE::idType::IMM11]},
+                {"imm14_12", Form_AndeStar_Custom_0_LBYTE::fields[Form_AndeStar_Custom_0_LBYTE::idType::IMM14_12]},
+                {"imm16_15", Form_AndeStar_Custom_0_LBYTE::fields[Form_AndeStar_Custom_0_LBYTE::idType::IMM16_15]},
+                {"imm0", Form_AndeStar_Custom_0_LBYTE::fields[Form_AndeStar_Custom_0_LBYTE::idType::IMM0]},
+                {"rd",    Form_AndeStar_Custom_0_LBYTE::fields[Form_AndeStar_Custom_0_LBYTE::idType::RD]},
+        };
+
+const std::map<std::string,Form_AndeStar_Custom_0_LBYTE::idType>
+        Form_AndeStar_Custom_0_LBYTE::imap
+        {
+                {"imm17", Form_AndeStar_Custom_0_LBYTE::idType::IMM17},
+                {"imm10_1", Form_AndeStar_Custom_0_LBYTE::idType::IMM10_1},
+                {"imm11", Form_AndeStar_Custom_0_LBYTE::idType::IMM11},
+                {"imm14_12", Form_AndeStar_Custom_0_LBYTE::idType::IMM14_12},
+                {"imm16_15", Form_AndeStar_Custom_0_LBYTE::idType::IMM16_15},
+                {"imm0", Form_AndeStar_Custom_0_LBYTE::idType::IMM0},
+                {"rd",    Form_AndeStar_Custom_0_LBYTE::idType::RD},
+        };
+
+const FieldsType Form_AndeStar_Custom_0_LBYTE::opcode_fields
+        {};
+
+const ImmediateType Form_AndeStar_Custom_0_LBYTE::immediate_type = ImmediateType::SIGNED;
+
+// ----------------------------------------------------------------------
 // Form_AndeStar_Custom_1_LOAD (see LWGP)
 // ----------------------------------------------------------------------
 const char * Form_AndeStar_Custom_1_LOAD::name {"AndeStar_Custom_1_LOAD"};
