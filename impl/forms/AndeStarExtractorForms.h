@@ -279,7 +279,37 @@ private:
 };
 
 
-// --------------------------------------------------------------------------- 
+// ---------------------------------------------------------------------------
+// AndeStar_Custom_1 (DECODE ONLY) form
+// ---------------------------------------------------------------------------
+template<>
+class Extractor<Form_AndeStar_Custom_1> : public ExtractorBase<Form_AndeStar_Custom_1>
+{
+public:
+    Extractor() = default;
+
+    ExtractorIF::PtrType specialCaseClone(const uint64_t ffmask, const uint64_t fset) const override
+    {
+        return ExtractorIF::PtrType(new Extractor<Form_AndeStar_Custom_1>(ffmask, fset));
+    }
+
+    using ExtractorIF::dasmString; // tell the compiler all dasmString
+    // overloads are considered
+
+    std::string dasmString(const std::string &mnemonic, const Opcode icode) const override
+    {
+        return mnemonic;
+    }
+
+private:
+    Extractor<Form_AndeStar_Custom_1>(const uint64_t ffmask, const uint64_t fset) :
+            fixed_field_mask_(ffmask)
+    {}
+
+    uint64_t fixed_field_mask_ = 0;
+};
+
+// ---------------------------------------------------------------------------
 // Form_AndeStar_Custom_1_LOAD - Form Extractor
 //
 //000 ExtractorIF::PtrType specialCaseClone(const uint64_t ffmask, const uint64_t fset) const override
