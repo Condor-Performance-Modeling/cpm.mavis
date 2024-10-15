@@ -124,6 +124,83 @@ public:
 };
 
 // ------------------------------------------------------------------
+// AndeStar Form Custom 1 LHALFGP (EXTRACT ONLY, xform)
+// ------------------------------------------------------------------
+class Form_AndeStar_Custom_1_LHALFGP
+{
+public:
+    enum idType : uint32_t
+    {
+        IMM17 = 0,  // 31
+        IMM10_1,    // 30:21
+        IMM11,      // 20
+        IMM14_12,   // 19:17
+        IMM16_15,   // 16:15
+        RD,         // 11:7
+        __N
+    };
+
+    static const char * name;
+    static const FieldsType fields;
+    static const std::map<std::string, const Field &> fmap;
+    static const std::map<std::string, idType> imap;
+    static const FieldsType opcode_fields;
+    static const ImmediateType immediate_type;
+};
+
+// ------------------------------------------------------------------
+// AndeStar Form Custom 1 LWORDGP (EXTRACT ONLY, xform)
+// ------------------------------------------------------------------
+class Form_AndeStar_Custom_1_LWORDGP
+{
+public:
+    enum idType : uint32_t
+    {
+        IMM18 = 0,  // 31
+        IMM10_2,    // 30:22
+        IMM17,      // 21
+        IMM11,      // 20
+        IMM14_12,   // 19:17
+        IMM16_15,   // 16:15
+        RD,         // 11:7
+        __N
+    };
+
+    static const char * name;
+    static const FieldsType fields;
+    static const std::map<std::string, const Field &> fmap;
+    static const std::map<std::string, idType> imap;
+    static const FieldsType opcode_fields;
+    static const ImmediateType immediate_type;
+};
+
+// ------------------------------------------------------------------
+// AndeStar Form Custom 1 LDOUBLEGP (EXTRACT ONLY, xform)
+// ------------------------------------------------------------------
+class Form_AndeStar_Custom_1_LDOUBLEGP
+{
+public:
+    enum idType : uint32_t
+    {
+        IMM19 = 0,  // 31
+        IMM10_3,    // 30:23
+        IMM18_17,   // 22:21
+        IMM11,      // 20
+        IMM14_12,   // 19:17
+        IMM16_15,   // 16:15
+        RD,         // 11:7
+        __N
+    };
+
+    static const char * name;
+    static const FieldsType fields;
+    static const std::map<std::string, const Field &> fmap;
+    static const std::map<std::string, idType> imap;
+    static const FieldsType opcode_fields;
+    static const ImmediateType immediate_type;
+};
+
+// ------------------------------------------------------------------
 // AndeStar Form Custom 1_LOAD
 //
 //   This form has a non-contiguous 17b immediate field
