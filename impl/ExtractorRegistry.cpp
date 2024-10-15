@@ -88,7 +88,8 @@ namespace mavis {
             {Form_AndeStar_Custom_0::name,        std::make_shared<Extractor<Form_AndeStar_Custom_0>>()},
             {Form_AndeStar_Custom_1_LOAD::name,   std::make_shared<Extractor<Form_AndeStar_Custom_1_LOAD>>()},
             {Form_AndeStar_Custom_1_STORE::name,  std::make_shared<Extractor<Form_AndeStar_Custom_1_STORE>>()},
-            {Form_AndeStar_Custom_2::name,        std::make_shared<Extractor<Form_AndeStar_Custom_2>>()}
+            {Form_AndeStar_Custom_2::name,        std::make_shared<Extractor<Form_AndeStar_Custom_2>>()},
+            {Form_AndeStar_Custom_2_BBx::name,    std::make_shared<Extractor<Form_AndeStar_Custom_2_BBx>>()}
         };
 
         const auto itr = EXTRACTOR_REGISTRY.find(fname);
