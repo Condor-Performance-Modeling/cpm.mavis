@@ -167,6 +167,8 @@ const ImmediateType Form_AndeStar_Custom_2::immediate_type = ImmediateType::SIGN
 
 // ----------------------------------------------------------------------
 // Form_AndeStar_Custom_2_BBx (For EXTRACTION ONLY, "xform")
+//
+//      For BBC and BBS
 // ----------------------------------------------------------------------
 const char * Form_AndeStar_Custom_2_BBx::name {"AndeStar_Custom_2_BBx"};
 
@@ -205,5 +207,51 @@ const FieldsType Form_AndeStar_Custom_2_BBx::opcode_fields
         {};
 
 const ImmediateType Form_AndeStar_Custom_2_BBx::immediate_type = ImmediateType::SIGNED;
+
+// ----------------------------------------------------------------------
+// Form_AndeStar_Custom_2_BxxC (For EXTRACTION ONLY, "xform")
+//
+//      For BEQC and BNEC
+// ----------------------------------------------------------------------
+const char * Form_AndeStar_Custom_2_BxxC::name {"AndeStar_Custom_2_BxxC"};
+
+const FieldsType Form_AndeStar_Custom_2_BxxC::fields
+        {
+                Field("imm10", 31,  1),
+                Field("cimm6", 30,  1),
+                Field("imm9_5", 25,  5),
+                Field("cimm4_0",  20,  5),
+                Field("rs1",  15,  5),
+                Field("imm4_1",  8,  4),
+                Field("cimm5",  7,  1),
+        };
+
+const std::map<std::string, const Field &> Form_AndeStar_Custom_2_BxxC::fmap
+        {
+                {"imm10",  Form_AndeStar_Custom_2_BxxC::fields[Form_AndeStar_Custom_2_BxxC::idType::IMM10]},
+                {"cimm6",  Form_AndeStar_Custom_2_BxxC::fields[Form_AndeStar_Custom_2_BxxC::idType::CIMM6]},
+                {"imm9_5",   Form_AndeStar_Custom_2_BxxC::fields[Form_AndeStar_Custom_2_BxxC::idType::IMM9_5]},
+                {"cimm4_0", Form_AndeStar_Custom_2_BxxC::fields[Form_AndeStar_Custom_2_BxxC::idType::CIMM4_0]},
+                {"rs1", Form_AndeStar_Custom_2_BxxC::fields[Form_AndeStar_Custom_2_BxxC::idType::RS1]},
+                {"imm4_1",Form_AndeStar_Custom_2_BxxC::fields[Form_AndeStar_Custom_2_BxxC::idType::IMM4_1]},
+                {"cimm5",Form_AndeStar_Custom_2_BxxC::fields[Form_AndeStar_Custom_2_BxxC::idType::CIMM5]},
+        };
+
+const std::map<std::string,Form_AndeStar_Custom_2_BxxC::idType>
+        Form_AndeStar_Custom_2_BxxC::imap
+        {
+                {"imm10",  Form_AndeStar_Custom_2_BxxC::idType::IMM10},
+                {"cimm6",   Form_AndeStar_Custom_2_BxxC::idType::CIMM6},
+                {"imm9_5",   Form_AndeStar_Custom_2_BxxC::idType::IMM9_5},
+                {"cimm4_0", Form_AndeStar_Custom_2_BxxC::idType::CIMM4_0},
+                {"rs1", Form_AndeStar_Custom_2_BxxC::idType::RS1},
+                {"imm4_1",Form_AndeStar_Custom_2_BxxC::idType::IMM4_1},
+                {"cimm5",Form_AndeStar_Custom_2_BxxC::idType::CIMM5}
+        };
+
+const FieldsType Form_AndeStar_Custom_2_BxxC::opcode_fields
+        {};
+
+const ImmediateType Form_AndeStar_Custom_2_BxxC::immediate_type = ImmediateType::SIGNED;
 
 } // namespace mavis

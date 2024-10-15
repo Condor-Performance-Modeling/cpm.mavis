@@ -143,11 +143,9 @@ public:
 };
 
 // ------------------------------------------------------------------
-// AndeStar Form Custom 2 (DECODE ONLY)
+// AndeStar Form Custom 2 BBx (EXTRACTION ONLY xform)
 //
-//    This form is used for decoding and lists only the encoding
-//    fields. Use "xform" to extract these AndeStar_Custom_2
-//    instructions
+//      For BBC and BBS
 // ------------------------------------------------------------------
 class Form_AndeStar_Custom_2_BBx
 {
@@ -170,6 +168,35 @@ public:
     static const FieldsType opcode_fields;
     static const ImmediateType immediate_type;
 
+};
+
+// ------------------------------------------------------------------
+// AndeStar Form Custom 2 BxxC (EXTRACTION ONLY xform)
+//
+//      For BEQC and BNEC
+// ------------------------------------------------------------------
+class Form_AndeStar_Custom_2_BxxC
+{
+public:
+    enum idType : uint32_t
+    {
+        IMM10 = 0,   // 31
+        CIMM6,       // 30
+        IMM9_5,      // 29:25
+        CIMM4_0,     // 24:20
+        RS1,         // 19:15
+        IMM4_1,      // 11:8
+        CIMM5,       // 7
+        __N
     };
+
+    static const char * name;
+    static const FieldsType fields;
+    static const std::map<std::string, const Field &> fmap;
+    static const std::map<std::string, idType> imap;
+    static const FieldsType opcode_fields;
+    static const ImmediateType immediate_type;
+
+};
 
 } // namespace mavis
