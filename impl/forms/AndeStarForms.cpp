@@ -291,4 +291,39 @@ const FieldsType Form_AndeStar_Custom_2_BFOx::opcode_fields
 
 const ImmediateType Form_AndeStar_Custom_2_BFOx::immediate_type = ImmediateType::NONE;
 
+
+// ----------------------------------------------------------------------
+// Form_AndeStar_Custom_2_LEA (For EXTRACTION ONLY, "xform")
+//
+//      For LEA* instructions
+// ----------------------------------------------------------------------
+const char * Form_AndeStar_Custom_2_LEA::name {"AndeStar_Custom_2_LEA"};
+
+const FieldsType Form_AndeStar_Custom_2_LEA::fields
+        {
+                Field("rs2", 20,  5),
+                Field("rs1",  15,  5),
+                Field("rd",  7,  5),
+        };
+
+const std::map<std::string, const Field &> Form_AndeStar_Custom_2_LEA::fmap
+        {
+                {"rs2", Form_AndeStar_Custom_2_LEA::fields[Form_AndeStar_Custom_2_LEA::idType::RS2]},
+                {"rs1", Form_AndeStar_Custom_2_LEA::fields[Form_AndeStar_Custom_2_LEA::idType::RS1]},
+                {"rd", Form_AndeStar_Custom_2_LEA::fields[Form_AndeStar_Custom_2_LEA::idType::RD]},
+        };
+
+const std::map<std::string,Form_AndeStar_Custom_2_LEA::idType>
+        Form_AndeStar_Custom_2_LEA::imap
+        {
+                {"rs2", Form_AndeStar_Custom_2_LEA::idType::RS2},
+                {"rs1", Form_AndeStar_Custom_2_LEA::idType::RS1},
+                {"rd", Form_AndeStar_Custom_2_LEA::idType::RD},
+        };
+
+const FieldsType Form_AndeStar_Custom_2_LEA::opcode_fields
+        {};
+
+const ImmediateType Form_AndeStar_Custom_2_LEA::immediate_type = ImmediateType::NONE;
+
 } // namespace mavis

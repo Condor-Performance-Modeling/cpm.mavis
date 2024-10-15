@@ -92,6 +92,7 @@ namespace mavis {
             {Form_AndeStar_Custom_2_BBx::name,    std::make_shared<Extractor<Form_AndeStar_Custom_2_BBx>>()},
             {Form_AndeStar_Custom_2_BxxC::name,    std::make_shared<Extractor<Form_AndeStar_Custom_2_BxxC>>()},
             {Form_AndeStar_Custom_2_BFOx::name,    std::make_shared<Extractor<Form_AndeStar_Custom_2_BFOx>>()},
+            {Form_AndeStar_Custom_2_LEA::name,    std::make_shared<Extractor<Form_AndeStar_Custom_2_LEA>>()},
         };
 
         const auto itr = EXTRACTOR_REGISTRY.find(fname);
