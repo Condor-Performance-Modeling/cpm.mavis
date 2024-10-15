@@ -87,6 +87,7 @@ namespace mavis {
             {Form_V_uimm_implied::name,           std::make_shared<Extractor<Form_V_uimm_implied>>()},
             {Form_AndeStar_Custom_0::name,        std::make_shared<Extractor<Form_AndeStar_Custom_0>>()},
             {Form_AndeStar_Custom_0_LBYTE::name,  std::make_shared<Extractor<Form_AndeStar_Custom_0_LBYTE>>()},
+            {Form_AndeStar_Custom_0_SBYTE::name,  std::make_shared<Extractor<Form_AndeStar_Custom_0_SBYTE>>()},
             {Form_AndeStar_Custom_1::name,        std::make_shared<Extractor<Form_AndeStar_Custom_1>>()},
             {Form_AndeStar_Custom_1_LOAD::name,   std::make_shared<Extractor<Form_AndeStar_Custom_1_LOAD>>()},
             {Form_AndeStar_Custom_1_STORE::name,  std::make_shared<Extractor<Form_AndeStar_Custom_1_STORE>>()},

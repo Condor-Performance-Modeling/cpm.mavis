@@ -87,6 +87,55 @@ const FieldsType Form_AndeStar_Custom_0_LBYTE::opcode_fields
 const ImmediateType Form_AndeStar_Custom_0_LBYTE::immediate_type = ImmediateType::SIGNED;
 
 // ----------------------------------------------------------------------
+// Form_AndeStar_Custom_0_SBYTE (EXTRACTION ONLY, xform)
+//
+//      for SBGP
+// ----------------------------------------------------------------------
+const char * Form_AndeStar_Custom_0_SBYTE::name {"AndeStar_Custom_0_SBYTE"};
+
+const FieldsType Form_AndeStar_Custom_0_SBYTE::fields
+        {
+                Field("imm17", 31, 1),
+                Field("imm10_5", 25, 6),
+                Field("rs2", 20,  5),
+                Field("imm14_12", 17,  3),
+                Field("imm16_15", 15,  2),
+                Field("imm0", 14,  1),
+                Field("imm4_1",     8,  4),
+                Field("imm11",     7,  1),
+        };
+
+const std::map<std::string, const Field &> Form_AndeStar_Custom_0_SBYTE::fmap
+        {
+                {"imm17", Form_AndeStar_Custom_0_SBYTE::fields[Form_AndeStar_Custom_0_SBYTE::idType::IMM17]},
+                {"imm10_5", Form_AndeStar_Custom_0_SBYTE::fields[Form_AndeStar_Custom_0_SBYTE::idType::IMM10_5]},
+                {"rs2", Form_AndeStar_Custom_0_SBYTE::fields[Form_AndeStar_Custom_0_SBYTE::idType::RS2]},
+                {"imm14_12", Form_AndeStar_Custom_0_SBYTE::fields[Form_AndeStar_Custom_0_SBYTE::idType::IMM14_12]},
+                {"imm16_15", Form_AndeStar_Custom_0_SBYTE::fields[Form_AndeStar_Custom_0_SBYTE::idType::IMM16_15]},
+                {"imm0", Form_AndeStar_Custom_0_SBYTE::fields[Form_AndeStar_Custom_0_SBYTE::idType::IMM0]},
+                {"imm4_1", Form_AndeStar_Custom_0_SBYTE::fields[Form_AndeStar_Custom_0_SBYTE::idType::IMM4_1]},
+                {"imm11", Form_AndeStar_Custom_0_SBYTE::fields[Form_AndeStar_Custom_0_SBYTE::idType::IMM11]},
+        };
+
+const std::map<std::string,Form_AndeStar_Custom_0_SBYTE::idType>
+        Form_AndeStar_Custom_0_SBYTE::imap
+        {
+                {"imm17", Form_AndeStar_Custom_0_SBYTE::idType::IMM17},
+                {"imm10_5", Form_AndeStar_Custom_0_SBYTE::idType::IMM10_5},
+                {"rs2", Form_AndeStar_Custom_0_SBYTE::idType::RS2},
+                {"imm14_12", Form_AndeStar_Custom_0_SBYTE::idType::IMM14_12},
+                {"imm16_15", Form_AndeStar_Custom_0_SBYTE::idType::IMM16_15},
+                {"imm0", Form_AndeStar_Custom_0_SBYTE::idType::IMM0},
+                {"imm4_1", Form_AndeStar_Custom_0_SBYTE::idType::IMM4_1},
+                {"imm11", Form_AndeStar_Custom_0_SBYTE::idType::IMM11},
+        };
+
+const FieldsType Form_AndeStar_Custom_0_SBYTE::opcode_fields
+        {};
+
+const ImmediateType Form_AndeStar_Custom_0_SBYTE::immediate_type = ImmediateType::SIGNED;
+
+// ----------------------------------------------------------------------
 // Form_AndeStar_Custom_1 (DECODE ONLY)
 // ----------------------------------------------------------------------
 const char * Form_AndeStar_Custom_1::name {"AndeStar_Custom_1"};
