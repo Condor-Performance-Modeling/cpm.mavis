@@ -198,6 +198,7 @@ public:
     static const ImmediateType immediate_type;
 
 };
+
 // ------------------------------------------------------------------
 // AndeStar Form Custom 2 BFOx (EXTRACTION ONLY xform)
 //
@@ -210,6 +211,31 @@ public:
     {
         MSB = 0,     // 31:26
         LSB,         // 25:20
+        RS1,         // 19:15
+        RD,          // 11:7
+        __N
+    };
+
+    static const char * name;
+    static const FieldsType fields;
+    static const std::map<std::string, const Field &> fmap;
+    static const std::map<std::string, idType> imap;
+    static const FieldsType opcode_fields;
+    static const ImmediateType immediate_type;
+
+};
+
+// ------------------------------------------------------------------
+// AndeStar Form Custom 2 LEA (EXTRACTION ONLY xform)
+//
+//      For LEA* instructions
+// ------------------------------------------------------------------
+class Form_AndeStar_Custom_2_LEA
+{
+public:
+    enum idType : uint32_t
+    {
+        RS2 = 0,     // 24:20
         RS1,         // 19:15
         RD,          // 11:7
         __N

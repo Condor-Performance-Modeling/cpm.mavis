@@ -913,4 +913,126 @@ private:
 
     uint64_t fixed_field_mask_ = 0;
 };
+
+// ---------------------------------------------------------------------------
+// AndeStar_Custom_2_LEA (EXTRACTION ONLY) "xform"
+//
+//      For LEA* instructions
+// ---------------------------------------------------------------------------
+template<>
+class Extractor<Form_AndeStar_Custom_2_LEA> : public ExtractorBase<Form_AndeStar_Custom_2_LEA>
+{
+public:
+    Extractor() = default;
+
+    ExtractorIF::PtrType specialCaseClone(const uint64_t ffmask, const uint64_t fset) const override
+    {
+        return ExtractorIF::PtrType(new Extractor<Form_AndeStar_Custom_2_LEA>(ffmask, fset));
+    }
+
+    uint64_t getSourceRegs(const Opcode icode) const override
+    {
+        return extractUnmaskedIndexBit_(Form_AndeStar_Custom_2_LEA::idType::RS1, icode, fixed_field_mask_) |
+               extractUnmaskedIndexBit_(Form_AndeStar_Custom_2_LEA::idType::RS2, icode, fixed_field_mask_);
+    }
+
+    uint64_t getSourceOperTypeRegs(const Opcode icode,
+                                   const InstMetaData::PtrType &meta,
+                                   InstMetaData::OperandTypes kind) const override
+    {
+        if (meta->isNoneOperandType(kind)) {
+            return 0;
+        } else if (meta->isAllOperandType(kind)) {
+            return getSourceRegs(icode);
+        } else {
+            uint64_t result = 0;
+            if (meta->isOperandType(InstMetaData::OperandFieldID::RS1, kind)) {
+                result |= extractUnmaskedIndexBit_(Form_AndeStar_Custom_2_LEA::idType::RS1, icode, fixed_field_mask_);
+            }
+            if (meta->isOperandType(InstMetaData::OperandFieldID::RS2, kind)) {
+                result |= extractUnmaskedIndexBit_(Form_AndeStar_Custom_2_LEA::idType::RS2, icode, fixed_field_mask_);
+            }
+            return result;
+        }
+    }
+
+    OperandInfo getSourceOperandInfo(Opcode icode, const InstMetaData::PtrType& meta,
+                                     bool suppress_x0 = false) const override
+    {
+        OperandInfo olist;
+        appendUnmaskedOperandInfo_(olist, icode, meta, InstMetaData::OperandFieldID::RS1,
+                                   fixed_field_mask_, Form_AndeStar_Custom_2_LEA::idType::RS1,
+                                   false, suppress_x0);
+        appendUnmaskedOperandInfo_(olist, icode, meta, InstMetaData::OperandFieldID::RS2,
+                                   fixed_field_mask_, Form_AndeStar_Custom_2_LEA::idType::RS2,
+                                   false, suppress_x0);
+        return olist;
+    }
+
+    uint64_t getDestRegs(const Opcode icode) const override
+    {
+        return extractUnmaskedIndexBit_(Form_AndeStar_Custom_2_LEA::idType::RD, icode, fixed_field_mask_);
+    }
+
+    uint64_t getDestOperTypeRegs(const Opcode icode,
+                                 const InstMetaData::PtrType &meta, InstMetaData::OperandTypes kind) const override
+    {
+        if (meta->isNoneOperandType(kind)) {
+            return 0;
+        } else if (meta->isAllOperandType(kind)) {
+            return getDestRegs(icode);
+        } else {
+            uint64_t result = 0;
+            if (meta->isOperandType(InstMetaData::OperandFieldID::RD, kind)) {
+                result |= extractUnmaskedIndexBit_(Form_AndeStar_Custom_2_LEA::idType::RD, icode, fixed_field_mask_);
+            }
+            return result;
+        }
+    }
+
+    OperandInfo getDestOperandInfo(Opcode icode, const InstMetaData::PtrType& meta,
+                                   bool suppress_x0 = false) const override
+    {
+        OperandInfo olist;
+        appendUnmaskedOperandInfo_(olist, icode, meta, InstMetaData::OperandFieldID::RD,
+                                   fixed_field_mask_, Form_AndeStar_Custom_2_LEA::idType::RD,
+                                   false, suppress_x0);
+        return olist;
+    }
+
+    ImmediateType getImmediateType() const override
+    {
+        return ImmediateType::NONE;
+    }
+
+    using ExtractorIF::dasmString; // tell the compiler all dasmString
+    // overloads are considered
+    std::string dasmString(const std::string &mnemonic, const Opcode icode) const override
+    {
+        std::stringstream ss;
+        ss << mnemonic
+           << "\t" << extract_(Form_AndeStar_Custom_2_LEA::idType::RD, icode & ~fixed_field_mask_)
+           << ", " << extract_(Form_AndeStar_Custom_2_LEA::idType::RS1, icode & ~fixed_field_mask_)
+           << ", " << extract_(Form_AndeStar_Custom_2_LEA::idType::RS2, icode & ~fixed_field_mask_);
+        return ss.str();
+    }
+
+    std::string dasmString(const std::string &mnemonic, const Opcode icode, const InstMetaData::PtrType& meta) const override
+    {
+        std::stringstream ss;
+        ss << mnemonic << "\t"
+           << dasmFormatRegList_(meta, icode, fixed_field_mask_,
+                                 { { Form_AndeStar_Custom_2_LEA::idType::RD, InstMetaData::OperandFieldID::RD },
+                                        { Form_AndeStar_Custom_2_LEA::idType::RS1, InstMetaData::OperandFieldID::RS1 },
+                                        { Form_AndeStar_Custom_2_LEA::idType::RS2, InstMetaData::OperandFieldID::RS2 } });
+        return ss.str();
+    }
+
+private:
+    Extractor<Form_AndeStar_Custom_2_LEA>(const uint64_t ffmask, const uint64_t fset) :
+            fixed_field_mask_(ffmask)
+    {}
+
+    uint64_t fixed_field_mask_ = 0;
+};
 }
