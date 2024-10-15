@@ -74,6 +74,27 @@ public:
 };
 
 // ------------------------------------------------------------------
+// AndeStar Form Custom 1 (DECODE ONLY)
+// ------------------------------------------------------------------
+class Form_AndeStar_Custom_1
+{
+public:
+    enum idType : uint32_t
+    {
+        FUNC3 = 0,  // 14:12
+        OPCODE,     // 6:0
+        __N
+    };
+
+    static const char * name;
+    static const FieldsType fields;
+    static const std::map<std::string, const Field &> fmap;
+    static const std::map<std::string, idType> imap;
+    static const FieldsType opcode_fields;
+    static const ImmediateType immediate_type;
+};
+
+// ------------------------------------------------------------------
 // AndeStar Form Custom 1_LOAD
 //
 //   This form has a non-contiguous 17b immediate field

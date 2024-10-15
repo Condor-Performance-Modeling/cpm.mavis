@@ -87,6 +87,37 @@ const FieldsType Form_AndeStar_Custom_0_LBYTE::opcode_fields
 const ImmediateType Form_AndeStar_Custom_0_LBYTE::immediate_type = ImmediateType::SIGNED;
 
 // ----------------------------------------------------------------------
+// Form_AndeStar_Custom_1 (DECODE ONLY)
+// ----------------------------------------------------------------------
+const char * Form_AndeStar_Custom_1::name {"AndeStar_Custom_1"};
+
+const FieldsType Form_AndeStar_Custom_1::fields
+        {
+                Field("func3",  12,  3),
+                Field("opcode",  0,  7)
+        };
+
+const std::map<std::string, const Field &> Form_AndeStar_Custom_1::fmap
+        {
+                {"func3", Form_AndeStar_Custom_1::fields[Form_AndeStar_Custom_1::idType::FUNC3]},
+                {"opcode",Form_AndeStar_Custom_1::fields[Form_AndeStar_Custom_1::idType::OPCODE]}
+        };
+
+const std::map<std::string,Form_AndeStar_Custom_1::idType> Form_AndeStar_Custom_1::imap
+        {
+                {"func3", Form_AndeStar_Custom_1::idType::FUNC3},
+                {"opcode",Form_AndeStar_Custom_1::idType::OPCODE}
+        };
+
+const FieldsType Form_AndeStar_Custom_1::opcode_fields
+        {
+                Form_AndeStar_Custom_1::fields[Form_AndeStar_Custom_1::idType::OPCODE],
+                Form_AndeStar_Custom_1::fields[Form_AndeStar_Custom_1::idType::FUNC3]
+        };
+
+const ImmediateType Form_AndeStar_Custom_1::immediate_type = ImmediateType::SIGNED;
+
+// ----------------------------------------------------------------------
 // Form_AndeStar_Custom_1_LOAD (see LWGP)
 // ----------------------------------------------------------------------
 const char * Form_AndeStar_Custom_1_LOAD::name {"AndeStar_Custom_1_LOAD"};
