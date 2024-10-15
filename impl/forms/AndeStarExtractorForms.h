@@ -663,7 +663,7 @@ public:
                (F::fields[F::idType::IMM16_15].extract(icode) << 15ull) |
                (F::fields[F::idType::IMM14_12].extract(icode) << 12ull) |
                (F::fields[F::idType::IMM11].extract(icode) << 11ull) |
-                F::fields[F::idType::IMM10_1].extract(icode) << 1ull;
+               (F::fields[F::idType::IMM10_1].extract(icode) << 1ull);
     }
 
     int64_t getSignedOffset(const Opcode icode) const override
@@ -708,7 +708,7 @@ public:
                (F::fields[F::idType::IMM16_15].extract(icode) << 15ull) |
                (F::fields[F::idType::IMM14_12].extract(icode) << 12ull) |
                (F::fields[F::idType::IMM11].extract(icode) << 11ull) |
-                F::fields[F::idType::IMM10_2].extract(icode) << 2ull;
+               (F::fields[F::idType::IMM10_2].extract(icode) << 2ull);
     }
 
     int64_t getSignedOffset(const Opcode icode) const override
@@ -753,12 +753,12 @@ public:
                (F::fields[F::idType::IMM16_15].extract(icode) << 15ull) |
                (F::fields[F::idType::IMM14_12].extract(icode) << 12ull) |
                (F::fields[F::idType::IMM11].extract(icode) << 11ull) |
-               F::fields[F::idType::IMM10_3].extract(icode) << 3ull;
+               (F::fields[F::idType::IMM10_3].extract(icode) << 3ull);
     }
 
     int64_t getSignedOffset(const Opcode icode) const override
     {
-        return signExtend_(getImmediate(icode), 18);
+        return signExtend_(getImmediate(icode), 19);
     }
 
 private:
@@ -924,14 +924,149 @@ public:
         return ss.str();
     }
 
-private:
+protected:
     Extractor<Form_AndeStar_Custom_1_STORE>(const uint64_t ffmask, const uint64_t fset) :
         fixed_field_mask_(ffmask)
     {}
 
     uint64_t fixed_field_mask_ = 0;
+};
 
+// ---------------------------------------------------------------------------
+// AndeStar_Custom_1_SHALFGP (EXTRACTION ONLY, xform)
+//
+//      For shgp
+// ---------------------------------------------------------------------------
+template<>
+class Extractor<Form_AndeStar_Custom_1_SHALFGP> : public Extractor<Form_AndeStar_Custom_1_STORE>
+{
+public:
+    Extractor<Form_AndeStar_Custom_1_SHALFGP>() :
+            Extractor<Form_AndeStar_Custom_1_STORE>()
+    {}
 
+    ExtractorIF::PtrType specialCaseClone(const uint64_t ffmask, const uint64_t fset) const override
+    {
+        return ExtractorIF::PtrType(new Extractor<Form_AndeStar_Custom_1_SHALFGP>(ffmask, fset));
+    }
+
+    std::string getName() const override
+    {
+        return Form_AndeStar_Custom_1_SHALFGP::name;
+    }
+
+    uint64_t getImmediate(const Opcode icode) const override
+    {
+        using F = Form_AndeStar_Custom_1_SHALFGP;
+        return (F::fields[F::idType::IMM17].extract(icode) << 17ull) |
+               (F::fields[F::idType::IMM16_15].extract(icode) << 15ull) |
+               (F::fields[F::idType::IMM14_12].extract(icode) << 12ull) |
+               (F::fields[F::idType::IMM11].extract(icode) << 11ull) |
+               (F::fields[F::idType::IMM10_5].extract(icode) << 5ull) |
+               (F::fields[F::idType::IMM4_1].extract(icode) << 1ull);
+    }
+
+    int64_t getSignedOffset(const Opcode icode) const override
+    {
+        return signExtend_(getImmediate(icode), 17);
+    }
+
+private:
+    Extractor<Form_AndeStar_Custom_1_SHALFGP>(const uint64_t ffmask, const uint64_t fset) :
+            Extractor<Form_AndeStar_Custom_1_STORE>(ffmask, fset)
+    {}
+};
+
+// ---------------------------------------------------------------------------
+// AndeStar_Custom_1_SWORDGP (EXTRACTION ONLY, xform)
+//
+//      For swgp
+// ---------------------------------------------------------------------------
+template<>
+class Extractor<Form_AndeStar_Custom_1_SWORDGP> : public Extractor<Form_AndeStar_Custom_1_STORE>
+{
+public:
+    Extractor<Form_AndeStar_Custom_1_SWORDGP>() :
+            Extractor<Form_AndeStar_Custom_1_STORE>()
+    {}
+
+    ExtractorIF::PtrType specialCaseClone(const uint64_t ffmask, const uint64_t fset) const override
+    {
+        return ExtractorIF::PtrType(new Extractor<Form_AndeStar_Custom_1_SWORDGP>(ffmask, fset));
+    }
+
+    std::string getName() const override
+    {
+        return Form_AndeStar_Custom_1_SWORDGP::name;
+    }
+
+    uint64_t getImmediate(const Opcode icode) const override
+    {
+        using F = Form_AndeStar_Custom_1_SWORDGP;
+        return (F::fields[F::idType::IMM18].extract(icode) << 18ull) |
+               (F::fields[F::idType::IMM17].extract(icode) << 17ull) |
+               (F::fields[F::idType::IMM16_15].extract(icode) << 15ull) |
+               (F::fields[F::idType::IMM14_12].extract(icode) << 12ull) |
+               (F::fields[F::idType::IMM11].extract(icode) << 11ull) |
+               (F::fields[F::idType::IMM10_5].extract(icode) << 5ull) |
+               (F::fields[F::idType::IMM4_2].extract(icode) << 2ull);
+    }
+
+    int64_t getSignedOffset(const Opcode icode) const override
+    {
+        return signExtend_(getImmediate(icode), 18);
+    }
+
+private:
+    Extractor<Form_AndeStar_Custom_1_SWORDGP>(const uint64_t ffmask, const uint64_t fset) :
+            Extractor<Form_AndeStar_Custom_1_STORE>(ffmask, fset)
+    {}
+};
+
+// ---------------------------------------------------------------------------
+// AndeStar_Custom_1_SDOUBLEGP (EXTRACTION ONLY, xform)
+//
+//      For sdgp
+// ---------------------------------------------------------------------------
+template<>
+class Extractor<Form_AndeStar_Custom_1_SDOUBLEGP> : public Extractor<Form_AndeStar_Custom_1_STORE>
+{
+public:
+    Extractor<Form_AndeStar_Custom_1_SDOUBLEGP>() :
+            Extractor<Form_AndeStar_Custom_1_STORE>()
+    {}
+
+    ExtractorIF::PtrType specialCaseClone(const uint64_t ffmask, const uint64_t fset) const override
+    {
+        return ExtractorIF::PtrType(new Extractor<Form_AndeStar_Custom_1_SDOUBLEGP>(ffmask, fset));
+    }
+
+    std::string getName() const override
+    {
+        return Form_AndeStar_Custom_1_SDOUBLEGP::name;
+    }
+
+    uint64_t getImmediate(const Opcode icode) const override
+    {
+        using F = Form_AndeStar_Custom_1_SDOUBLEGP;
+        return (F::fields[F::idType::IMM19].extract(icode) << 19ull) |
+               (F::fields[F::idType::IMM18_17].extract(icode) << 17ull) |
+               (F::fields[F::idType::IMM16_15].extract(icode) << 15ull) |
+               (F::fields[F::idType::IMM14_12].extract(icode) << 12ull) |
+               (F::fields[F::idType::IMM11].extract(icode) << 11ull) |
+               (F::fields[F::idType::IMM10_5].extract(icode) << 5ull) |
+               (F::fields[F::idType::IMM4_3].extract(icode) << 3ull);
+    }
+
+    int64_t getSignedOffset(const Opcode icode) const override
+    {
+        return signExtend_(getImmediate(icode), 19);
+    }
+
+private:
+    Extractor<Form_AndeStar_Custom_1_SDOUBLEGP>(const uint64_t ffmask, const uint64_t fset) :
+            Extractor<Form_AndeStar_Custom_1_STORE>(ffmask, fset)
+    {}
 };
 
 // ---------------------------------------------------------------------------
