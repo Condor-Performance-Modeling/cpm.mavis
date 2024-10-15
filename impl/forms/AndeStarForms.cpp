@@ -121,6 +121,48 @@ const FieldsType Form_AndeStar_Custom_1_STORE::opcode_fields
 
 const ImmediateType Form_AndeStar_Custom_1_STORE::immediate_type = ImmediateType::SIGNED;
 
+// ----------------------------------------------------------------------
+// Form_AndeStar_Custom_2 (DECODE ONLY FORM)
+// ----------------------------------------------------------------------
+const char * Form_AndeStar_Custom_2::name {"AndeStar_Custom_2"};
 
+const FieldsType Form_AndeStar_Custom_2::fields
+        {
+                Field("func1a", 31,  1),
+                Field("func1b", 30,  1),
+                Field("func5",  25,  5),
+                Field("func3",  12,  3),
+                Field("opcode",  0,  7)
+        };
+
+const std::map<std::string, const Field &> Form_AndeStar_Custom_2::fmap
+        {
+                {"func1a",  Form_AndeStar_Custom_2::fields[Form_AndeStar_Custom_2::idType::FUNC1A]},
+                {"func1b",   Form_AndeStar_Custom_2::fields[Form_AndeStar_Custom_2::idType::FUNC1B]},
+                {"func5", Form_AndeStar_Custom_2::fields[Form_AndeStar_Custom_2::idType::FUNC5]},
+                {"func3", Form_AndeStar_Custom_2::fields[Form_AndeStar_Custom_2::idType::FUNC3]},
+                {"opcode",Form_AndeStar_Custom_2::fields[Form_AndeStar_Custom_2::idType::OPCODE]}
+        };
+
+const std::map<std::string,Form_AndeStar_Custom_2::idType>
+        Form_AndeStar_Custom_2::imap
+        {
+                {"func1a",  Form_AndeStar_Custom_2::idType::FUNC1A},
+                {"func1b",   Form_AndeStar_Custom_2::idType::FUNC1B},
+                {"func5", Form_AndeStar_Custom_2::idType::FUNC5},
+                {"func3", Form_AndeStar_Custom_2::idType::FUNC3},
+                {"opcode",Form_AndeStar_Custom_2::idType::OPCODE}
+        };
+
+const FieldsType Form_AndeStar_Custom_2::opcode_fields
+        {
+                Form_AndeStar_Custom_2::fields[Form_AndeStar_Custom_2::idType::OPCODE],
+                Form_AndeStar_Custom_2::fields[Form_AndeStar_Custom_2::idType::FUNC3],
+                Form_AndeStar_Custom_2::fields[Form_AndeStar_Custom_2::idType::FUNC5],
+                Form_AndeStar_Custom_2::fields[Form_AndeStar_Custom_2::idType::FUNC1B],
+                Form_AndeStar_Custom_2::fields[Form_AndeStar_Custom_2::idType::FUNC1A]
+        };
+
+const ImmediateType Form_AndeStar_Custom_2::immediate_type = ImmediateType::SIGNED;
 
 } // namespace mavis

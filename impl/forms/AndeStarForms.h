@@ -113,4 +113,33 @@ public:
     static const ImmediateType immediate_type;
 };
 
+// ------------------------------------------------------------------
+// AndeStar Form Custom 2 (DECODE ONLY)
+//
+//    This form is used for decoding and lists only the encoding
+//    fields. Use "xform" to extract these AndeStar_Custom_2
+//    instructions
+// ------------------------------------------------------------------
+class Form_AndeStar_Custom_2
+{
+public:
+    enum idType : uint32_t
+    {
+        FUNC1A = 0,  // 31
+        FUNC1B,      // 30
+        FUNC5,       // 29:25
+        FUNC3,       // 14:12
+        OPCODE,      // 6:0
+        __N
+    };
+
+    static const char * name;
+    static const FieldsType fields;
+    static const std::map<std::string, const Field &> fmap;
+    static const std::map<std::string, idType> imap;
+    static const FieldsType opcode_fields;
+    static const ImmediateType immediate_type;
+
+};
+
 } // namespace mavis
