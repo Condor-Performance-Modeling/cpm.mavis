@@ -610,7 +610,7 @@ public:
         std::stringstream ss;
         ss << mnemonic
            << "\t" << extract_(Form_AndeStar_Custom_1_LOAD::idType::RD, icode & ~fixed_field_mask_)
-           << ", [+" << std::hex << getSignedOffset(icode) <<"]";
+           << ", [+0x" << std::hex << getSignedOffset(icode) <<"]";
         return ss.str();
     }
 
@@ -909,7 +909,7 @@ public:
         std::stringstream ss;
         ss << mnemonic
            << "\t" << extract_(Form_AndeStar_Custom_1_STORE::idType::RS2, icode)
-           << ", [+" << std::dec << getImmediate(icode) << "]";
+           << ", [+0x" << std::hex << getImmediate(icode) << "]";
         return ss.str();
     }
 
@@ -920,7 +920,7 @@ public:
         ss << mnemonic << "\t"
            << dasmFormatRegList_(meta, icode, fixed_field_mask_,
                                  { { Form_AndeStar_Custom_1_STORE::idType::RS2, InstMetaData::OperandFieldID::RS2 } })
-           << ", +0x" << std::dec << getImmediate(icode);
+           << ", +0x" << std::hex << getImmediate(icode);
         return ss.str();
     }
 
