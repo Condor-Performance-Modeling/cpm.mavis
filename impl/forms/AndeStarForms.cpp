@@ -380,6 +380,147 @@ const FieldsType Form_AndeStar_Custom_1_STORE::opcode_fields
 const ImmediateType Form_AndeStar_Custom_1_STORE::immediate_type = ImmediateType::SIGNED;
 
 // ----------------------------------------------------------------------
+// Form_AndeStar_Custom_1_SHALFGP (EXTRACT ONLY, xform)
+//
+//      For shgp
+// ----------------------------------------------------------------------
+const char * Form_AndeStar_Custom_1_SHALFGP::name {"AndeStar_Custom_1_SHALFGP"};
+
+const FieldsType Form_AndeStar_Custom_1_SHALFGP::fields
+        {
+                Field("imm17",  31, 1),
+                Field("imm10_5",  25, 6),
+                Field("rs2",  20, 5),
+                Field("imm14_12",  17, 3),
+                Field("imm16_15",  15, 2),
+                Field("imm4_1",  8, 4),
+                Field("imm11",  7, 1),
+        };
+
+const std::map<std::string, const Field &> Form_AndeStar_Custom_1_SHALFGP::fmap
+        {
+                {"imm17", Form_AndeStar_Custom_1_SHALFGP::fields[Form_AndeStar_Custom_1_SHALFGP::idType::IMM17]},
+                {"imm10_5", Form_AndeStar_Custom_1_SHALFGP::fields[Form_AndeStar_Custom_1_SHALFGP::idType::IMM10_5]},
+                {"rs2",    Form_AndeStar_Custom_1_SHALFGP::fields[Form_AndeStar_Custom_1_SHALFGP::idType::RS2]},
+                {"imm14_12", Form_AndeStar_Custom_1_SHALFGP::fields[Form_AndeStar_Custom_1_SHALFGP::idType::IMM14_12]},
+                {"imm16_15", Form_AndeStar_Custom_1_SHALFGP::fields[Form_AndeStar_Custom_1_SHALFGP::idType::IMM16_15]},
+                {"imm4_1", Form_AndeStar_Custom_1_SHALFGP::fields[Form_AndeStar_Custom_1_SHALFGP::idType::IMM4_1]},
+                {"imm11", Form_AndeStar_Custom_1_SHALFGP::fields[Form_AndeStar_Custom_1_SHALFGP::idType::IMM11]},
+        };
+
+const std::map<std::string,Form_AndeStar_Custom_1_SHALFGP::idType> Form_AndeStar_Custom_1_SHALFGP::imap
+        {
+                {"imm17", Form_AndeStar_Custom_1_SHALFGP::idType::IMM17},
+                {"imm10_5", Form_AndeStar_Custom_1_SHALFGP::idType::IMM10_5},
+                {"rs2",    Form_AndeStar_Custom_1_SHALFGP::idType::RS2},
+                {"imm14_12", Form_AndeStar_Custom_1_SHALFGP::idType::IMM14_12},
+                {"imm16_15", Form_AndeStar_Custom_1_SHALFGP::idType::IMM16_15},
+                {"imm4_1", Form_AndeStar_Custom_1_SHALFGP::idType::IMM4_1},
+                {"imm11", Form_AndeStar_Custom_1_SHALFGP::idType::IMM11},
+        };
+
+const FieldsType Form_AndeStar_Custom_1_SHALFGP::opcode_fields
+        {};
+
+const ImmediateType Form_AndeStar_Custom_1_SHALFGP::immediate_type = ImmediateType::SIGNED;
+
+// ----------------------------------------------------------------------
+// Form_AndeStar_Custom_1_SWORDGP (EXTRACT ONLY, xform)
+//
+//      For swgp
+// ----------------------------------------------------------------------
+const char * Form_AndeStar_Custom_1_SWORDGP::name {"AndeStar_Custom_1_SWORDGP"};
+
+const FieldsType Form_AndeStar_Custom_1_SWORDGP::fields
+        {
+                Field("imm18",  31, 1),
+                Field("imm10_5",  25, 6),
+                Field("rs2",  20, 5),
+                Field("imm14_12",  17, 3),
+                Field("imm16_15",  15, 2),
+                Field("imm4_2",  9, 3),
+                Field("imm17",  8, 1),
+                Field("imm11",  7, 1),
+        };
+
+const std::map<std::string, const Field &> Form_AndeStar_Custom_1_SWORDGP::fmap
+        {
+                {"imm18", Form_AndeStar_Custom_1_SWORDGP::fields[Form_AndeStar_Custom_1_SWORDGP::idType::IMM18]},
+                {"imm10_5", Form_AndeStar_Custom_1_SWORDGP::fields[Form_AndeStar_Custom_1_SWORDGP::idType::IMM10_5]},
+                {"rs2",    Form_AndeStar_Custom_1_SWORDGP::fields[Form_AndeStar_Custom_1_SWORDGP::idType::RS2]},
+                {"imm14_12", Form_AndeStar_Custom_1_SWORDGP::fields[Form_AndeStar_Custom_1_SWORDGP::idType::IMM14_12]},
+                {"imm16_15", Form_AndeStar_Custom_1_SWORDGP::fields[Form_AndeStar_Custom_1_SWORDGP::idType::IMM16_15]},
+                {"imm4_2", Form_AndeStar_Custom_1_SWORDGP::fields[Form_AndeStar_Custom_1_SWORDGP::idType::IMM4_2]},
+                {"imm17", Form_AndeStar_Custom_1_SWORDGP::fields[Form_AndeStar_Custom_1_SWORDGP::idType::IMM17]},
+                {"imm11", Form_AndeStar_Custom_1_SWORDGP::fields[Form_AndeStar_Custom_1_SWORDGP::idType::IMM11]},
+        };
+
+const std::map<std::string,Form_AndeStar_Custom_1_SWORDGP::idType> Form_AndeStar_Custom_1_SWORDGP::imap
+        {
+                {"imm18", Form_AndeStar_Custom_1_SWORDGP::idType::IMM18},
+                {"imm10_5", Form_AndeStar_Custom_1_SWORDGP::idType::IMM10_5},
+                {"rs2",    Form_AndeStar_Custom_1_SWORDGP::idType::RS2},
+                {"imm14_12", Form_AndeStar_Custom_1_SWORDGP::idType::IMM14_12},
+                {"imm16_15", Form_AndeStar_Custom_1_SWORDGP::idType::IMM16_15},
+                {"imm4_2", Form_AndeStar_Custom_1_SWORDGP::idType::IMM4_2},
+                {"imm17", Form_AndeStar_Custom_1_SWORDGP::idType::IMM17},
+                {"imm11", Form_AndeStar_Custom_1_SWORDGP::idType::IMM11},
+        };
+
+const FieldsType Form_AndeStar_Custom_1_SWORDGP::opcode_fields
+        {};
+
+const ImmediateType Form_AndeStar_Custom_1_SWORDGP::immediate_type = ImmediateType::SIGNED;
+
+// ----------------------------------------------------------------------
+// Form_AndeStar_Custom_1_SDOUBLEGP (EXTRACT ONLY, xform)
+//
+//      For sdgp
+// ----------------------------------------------------------------------
+const char * Form_AndeStar_Custom_1_SDOUBLEGP::name {"AndeStar_Custom_1_SDOUBLEGP"};
+
+const FieldsType Form_AndeStar_Custom_1_SDOUBLEGP::fields
+        {
+                Field("imm19",  31, 1),
+                Field("imm10_5",  25, 6),
+                Field("rs2",  20, 5),
+                Field("imm14_12",  17, 3),
+                Field("imm16_15",  15, 2),
+                Field("imm4_3",  10, 2),
+                Field("imm18_17",  8, 2),
+                Field("imm11",  7, 1),
+        };
+
+const std::map<std::string, const Field &> Form_AndeStar_Custom_1_SDOUBLEGP::fmap
+        {
+                {"imm19", Form_AndeStar_Custom_1_SDOUBLEGP::fields[Form_AndeStar_Custom_1_SDOUBLEGP::idType::IMM19]},
+                {"imm10_5", Form_AndeStar_Custom_1_SDOUBLEGP::fields[Form_AndeStar_Custom_1_SDOUBLEGP::idType::IMM10_5]},
+                {"rs2",    Form_AndeStar_Custom_1_SDOUBLEGP::fields[Form_AndeStar_Custom_1_SDOUBLEGP::idType::RS2]},
+                {"imm14_12", Form_AndeStar_Custom_1_SDOUBLEGP::fields[Form_AndeStar_Custom_1_SDOUBLEGP::idType::IMM14_12]},
+                {"imm16_15", Form_AndeStar_Custom_1_SDOUBLEGP::fields[Form_AndeStar_Custom_1_SDOUBLEGP::idType::IMM16_15]},
+                {"imm4_3", Form_AndeStar_Custom_1_SDOUBLEGP::fields[Form_AndeStar_Custom_1_SDOUBLEGP::idType::IMM4_3]},
+                {"imm18_17", Form_AndeStar_Custom_1_SDOUBLEGP::fields[Form_AndeStar_Custom_1_SDOUBLEGP::idType::IMM18_17]},
+                {"imm11", Form_AndeStar_Custom_1_SDOUBLEGP::fields[Form_AndeStar_Custom_1_SDOUBLEGP::idType::IMM11]},
+        };
+
+const std::map<std::string,Form_AndeStar_Custom_1_SDOUBLEGP::idType> Form_AndeStar_Custom_1_SDOUBLEGP::imap
+        {
+                {"imm19", Form_AndeStar_Custom_1_SDOUBLEGP::idType::IMM19},
+                {"imm10_5", Form_AndeStar_Custom_1_SDOUBLEGP::idType::IMM10_5},
+                {"rs2",    Form_AndeStar_Custom_1_SDOUBLEGP::idType::RS2},
+                {"imm14_12", Form_AndeStar_Custom_1_SDOUBLEGP::idType::IMM14_12},
+                {"imm16_15", Form_AndeStar_Custom_1_SDOUBLEGP::idType::IMM16_15},
+                {"imm4_3", Form_AndeStar_Custom_1_SDOUBLEGP::idType::IMM4_3},
+                {"imm18_17", Form_AndeStar_Custom_1_SDOUBLEGP::idType::IMM18_17},
+                {"imm11", Form_AndeStar_Custom_1_SDOUBLEGP::idType::IMM11},
+        };
+
+const FieldsType Form_AndeStar_Custom_1_SDOUBLEGP::opcode_fields
+        {};
+
+const ImmediateType Form_AndeStar_Custom_1_SDOUBLEGP::immediate_type = ImmediateType::SIGNED;
+
+// ----------------------------------------------------------------------
 // Form_AndeStar_Custom_2 (DECODE ONLY FORM)
 // ----------------------------------------------------------------------
 const char * Form_AndeStar_Custom_2::name {"AndeStar_Custom_2"};
