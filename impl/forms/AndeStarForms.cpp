@@ -167,6 +167,138 @@ const FieldsType Form_AndeStar_Custom_1::opcode_fields
 const ImmediateType Form_AndeStar_Custom_1::immediate_type = ImmediateType::SIGNED;
 
 // ----------------------------------------------------------------------
+// Form_AndeStar_Custom_1_LHALFGP (EXTRACT ONLY, xform)
+//
+//      For lhgp and lhugp
+// ----------------------------------------------------------------------
+const char * Form_AndeStar_Custom_1_LHALFGP::name {"AndeStar_Custom_1_LHALFGP"};
+
+const FieldsType Form_AndeStar_Custom_1_LHALFGP::fields
+        {
+                Field("imm17",  31, 1),
+                Field("imm10_1",  21, 10),
+                Field("imm11",  20, 1),
+                Field("imm14_12",  17, 3),
+                Field("imm16_15",  15, 2),
+                Field("rd",  7, 5),
+        };
+
+const std::map<std::string, const Field &> Form_AndeStar_Custom_1_LHALFGP::fmap
+        {
+                {"imm17", Form_AndeStar_Custom_1_LHALFGP::fields[Form_AndeStar_Custom_1_LHALFGP::idType::IMM17]},
+                {"imm10_1", Form_AndeStar_Custom_1_LHALFGP::fields[Form_AndeStar_Custom_1_LHALFGP::idType::IMM10_1]},
+                {"imm11", Form_AndeStar_Custom_1_LHALFGP::fields[Form_AndeStar_Custom_1_LHALFGP::idType::IMM11]},
+                {"imm14_12", Form_AndeStar_Custom_1_LHALFGP::fields[Form_AndeStar_Custom_1_LHALFGP::idType::IMM14_12]},
+                {"imm16_15", Form_AndeStar_Custom_1_LHALFGP::fields[Form_AndeStar_Custom_1_LHALFGP::idType::IMM16_15]},
+                {"rd",    Form_AndeStar_Custom_1_LHALFGP::fields[Form_AndeStar_Custom_1_LHALFGP::idType::RD]},
+        };
+
+const std::map<std::string,Form_AndeStar_Custom_1_LHALFGP::idType> Form_AndeStar_Custom_1_LHALFGP::imap
+        {
+                {"imm17", Form_AndeStar_Custom_1_LHALFGP::idType::IMM17},
+                {"imm10_1", Form_AndeStar_Custom_1_LHALFGP::idType::IMM10_1},
+                {"imm11", Form_AndeStar_Custom_1_LHALFGP::idType::IMM11},
+                {"imm14_12", Form_AndeStar_Custom_1_LHALFGP::idType::IMM14_12},
+                {"imm16_15", Form_AndeStar_Custom_1_LHALFGP::idType::IMM16_15},
+                {"rd",    Form_AndeStar_Custom_1_LHALFGP::idType::RD},
+        };
+
+const FieldsType Form_AndeStar_Custom_1_LHALFGP::opcode_fields
+        {};
+
+const ImmediateType Form_AndeStar_Custom_1_LHALFGP::immediate_type = ImmediateType::SIGNED;
+
+// ----------------------------------------------------------------------
+// Form_AndeStar_Custom_1_LWORDGP (EXTRACT ONLY, xform)
+//
+//      For lwgp and lwugp
+// ----------------------------------------------------------------------
+const char * Form_AndeStar_Custom_1_LWORDGP::name {"AndeStar_Custom_1_LWORDGP"};
+
+const FieldsType Form_AndeStar_Custom_1_LWORDGP::fields
+        {
+                Field("imm18",  31, 1),
+                Field("imm10_2",  22, 9),
+                Field("imm17",  21, 1),
+                Field("imm11",  20, 1),
+                Field("imm14_12",  17, 3),
+                Field("imm16_15",  15, 2),
+                Field("rd",  7, 5),
+        };
+
+const std::map<std::string, const Field &> Form_AndeStar_Custom_1_LWORDGP::fmap
+        {
+                {"imm18", Form_AndeStar_Custom_1_LWORDGP::fields[Form_AndeStar_Custom_1_LWORDGP::idType::IMM18]},
+                {"imm10_2", Form_AndeStar_Custom_1_LWORDGP::fields[Form_AndeStar_Custom_1_LWORDGP::idType::IMM10_2]},
+                {"imm17", Form_AndeStar_Custom_1_LWORDGP::fields[Form_AndeStar_Custom_1_LWORDGP::idType::IMM17]},
+                {"imm11", Form_AndeStar_Custom_1_LWORDGP::fields[Form_AndeStar_Custom_1_LWORDGP::idType::IMM11]},
+                {"imm14_12", Form_AndeStar_Custom_1_LWORDGP::fields[Form_AndeStar_Custom_1_LWORDGP::idType::IMM14_12]},
+                {"imm16_15", Form_AndeStar_Custom_1_LWORDGP::fields[Form_AndeStar_Custom_1_LWORDGP::idType::IMM16_15]},
+                {"rd",    Form_AndeStar_Custom_1_LWORDGP::fields[Form_AndeStar_Custom_1_LWORDGP::idType::RD]},
+        };
+
+const std::map<std::string,Form_AndeStar_Custom_1_LWORDGP::idType> Form_AndeStar_Custom_1_LWORDGP::imap
+        {
+                {"imm18", Form_AndeStar_Custom_1_LWORDGP::idType::IMM18},
+                {"imm10_2", Form_AndeStar_Custom_1_LWORDGP::idType::IMM10_2},
+                {"imm17", Form_AndeStar_Custom_1_LWORDGP::idType::IMM17},
+                {"imm11", Form_AndeStar_Custom_1_LWORDGP::idType::IMM11},
+                {"imm14_12", Form_AndeStar_Custom_1_LWORDGP::idType::IMM14_12},
+                {"imm16_15", Form_AndeStar_Custom_1_LWORDGP::idType::IMM16_15},
+                {"rd",    Form_AndeStar_Custom_1_LWORDGP::idType::RD},
+        };
+
+const FieldsType Form_AndeStar_Custom_1_LWORDGP::opcode_fields
+        {};
+
+const ImmediateType Form_AndeStar_Custom_1_LWORDGP::immediate_type = ImmediateType::SIGNED;
+
+// ----------------------------------------------------------------------
+// Form_AndeStar_Custom_1_LDOUBLEGP (EXTRACT ONLY, xform)
+//
+//      For ldgp
+// ----------------------------------------------------------------------
+const char * Form_AndeStar_Custom_1_LDOUBLEGP::name {"AndeStar_Custom_1_LDOUBLEGP"};
+
+const FieldsType Form_AndeStar_Custom_1_LDOUBLEGP::fields
+        {
+                Field("imm19",  31, 1),
+                Field("imm10_3",  23, 8),
+                Field("imm18_17",  21, 2),
+                Field("imm11",  20, 1),
+                Field("imm14_12",  17, 3),
+                Field("imm16_15",  15, 2),
+                Field("rd",  7, 5),
+        };
+
+const std::map<std::string, const Field &> Form_AndeStar_Custom_1_LDOUBLEGP::fmap
+        {
+                {"imm19", Form_AndeStar_Custom_1_LDOUBLEGP::fields[Form_AndeStar_Custom_1_LDOUBLEGP::idType::IMM19]},
+                {"imm10_3", Form_AndeStar_Custom_1_LDOUBLEGP::fields[Form_AndeStar_Custom_1_LDOUBLEGP::idType::IMM10_3]},
+                {"imm18_17", Form_AndeStar_Custom_1_LDOUBLEGP::fields[Form_AndeStar_Custom_1_LDOUBLEGP::idType::IMM18_17]},
+                {"imm11", Form_AndeStar_Custom_1_LDOUBLEGP::fields[Form_AndeStar_Custom_1_LDOUBLEGP::idType::IMM11]},
+                {"imm14_12", Form_AndeStar_Custom_1_LDOUBLEGP::fields[Form_AndeStar_Custom_1_LDOUBLEGP::idType::IMM14_12]},
+                {"imm16_15", Form_AndeStar_Custom_1_LDOUBLEGP::fields[Form_AndeStar_Custom_1_LDOUBLEGP::idType::IMM16_15]},
+                {"rd",    Form_AndeStar_Custom_1_LDOUBLEGP::fields[Form_AndeStar_Custom_1_LDOUBLEGP::idType::RD]},
+        };
+
+const std::map<std::string,Form_AndeStar_Custom_1_LDOUBLEGP::idType> Form_AndeStar_Custom_1_LDOUBLEGP::imap
+        {
+                {"imm19", Form_AndeStar_Custom_1_LDOUBLEGP::idType::IMM19},
+                {"imm10_3", Form_AndeStar_Custom_1_LDOUBLEGP::idType::IMM10_3},
+                {"imm18_17", Form_AndeStar_Custom_1_LDOUBLEGP::idType::IMM18_17},
+                {"imm11", Form_AndeStar_Custom_1_LDOUBLEGP::idType::IMM11},
+                {"imm14_12", Form_AndeStar_Custom_1_LDOUBLEGP::idType::IMM14_12},
+                {"imm16_15", Form_AndeStar_Custom_1_LDOUBLEGP::idType::IMM16_15},
+                {"rd",    Form_AndeStar_Custom_1_LDOUBLEGP::idType::RD},
+        };
+
+const FieldsType Form_AndeStar_Custom_1_LDOUBLEGP::opcode_fields
+        {};
+
+const ImmediateType Form_AndeStar_Custom_1_LDOUBLEGP::immediate_type = ImmediateType::SIGNED;
+
+// ----------------------------------------------------------------------
 // Form_AndeStar_Custom_1_LOAD (see LWGP)
 // ----------------------------------------------------------------------
 const char * Form_AndeStar_Custom_1_LOAD::name {"AndeStar_Custom_1_LOAD"};
