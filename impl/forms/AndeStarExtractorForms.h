@@ -572,7 +572,6 @@ public:
         return ImmediateType::SIGNED;
     }
 
-#if 0
 //008
     uint64_t getImmediate(const Opcode icode) const override
     {
@@ -600,7 +599,6 @@ public:
     {
         return signExtend_(getImmediate(icode), 18);
     }
-#endif
 
     using ExtractorIF::dasmString; // tell the compiler all dasmString
                                    // overloads are considered
