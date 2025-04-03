@@ -425,7 +425,9 @@ public:
 private:
     Extractor<Form_AndeStar_Custom_0_SBYTE>(const uint64_t ffmask, const uint64_t fset) :
             fixed_field_mask_(ffmask)
-    {}
+    {
+        (void) fixed_field_mask_;
+    }
 
     uint64_t fixed_field_mask_ = 0;
 };
@@ -455,7 +457,9 @@ public:
 private:
     Extractor<Form_AndeStar_Custom_1>(const uint64_t ffmask, const uint64_t fset) :
             fixed_field_mask_(ffmask)
-    {}
+    {
+        (void) fixed_field_mask_;
+    }
 
     uint64_t fixed_field_mask_ = 0;
 };
@@ -1092,7 +1096,9 @@ public:
 private:
     Extractor<Form_AndeStar_Custom_2>(const uint64_t ffmask, const uint64_t fset) :
             fixed_field_mask_(ffmask)
-    {}
+    {
+        (void) fixed_field_mask_;
+    }
 
     uint64_t fixed_field_mask_ = 0;
 };
