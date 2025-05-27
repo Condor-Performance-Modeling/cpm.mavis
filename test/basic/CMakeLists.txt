@@ -1,9 +1,11 @@
-PROJECT(MAVIS_TESTS)
-
 cmake_minimum_required (VERSION 3.15)
+PROJECT(MAVIS_TESTS)
 
 set (CMAKE_CXX_STANDARD 17)
 set (CMAKE_CXX_STANDARD_REQUIRED ON)
+
+find_package (Boost 1.85.0 REQUIRED COMPONENTS program_options json)
+message (STATUS "Using BOOST ${Boost_VERSION_STRING}")
 
 add_compile_options (-g -Werror -fPIC
   -Wall -Wextra -Winline -Winit-self -Wno-unused-function
@@ -23,7 +25,7 @@ file(CREATE_LINK ${CMAKE_SOURCE_DIR}/json ${CMAKE_CURRENT_BINARY_DIR}/json SYMBO
 file(CREATE_LINK ${CMAKE_SOURCE_DIR}/test/basic ${CMAKE_CURRENT_BINARY_DIR}/uarch SYMBOLIC)
 file(CREATE_LINK ${CMAKE_SOURCE_DIR}/test/basic/golden.out ${CMAKE_CURRENT_BINARY_DIR}/golden.out SYMBOLIC)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/../..)
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/..)
 add_executable(Mavis main.cpp)
 target_link_libraries (Mavis PRIVATE mavis Boost::program_options Boost::json)
