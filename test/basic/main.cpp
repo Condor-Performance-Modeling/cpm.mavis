@@ -7,20 +7,7 @@
 #include "Inst.h"
 #include "uArchInfo.h"
 
-#include "MatchSet.hpp"
-#include "Tag.hpp"
-#include "Pattern.hpp"
-
-// For custom extraction
-#include "ExtractorDirectImplementations.hpp"
-
-#include <iostream>
-#include <iomanip>
-#include <string>
-#include <vector>
-
 using namespace std;
-using json = nlohmann::json;
 
 struct ExampleTraceInfo
 {
@@ -42,90 +29,7 @@ struct ExampleTraceInfo
 
 using MavisType = Mavis<Instruction<uArchInfo>, uArchInfo>;
 
-
-// -----------------------------------------------------------
-void test_andestar_tset(MavisType &mav_andes) {
-    runTSet(mav_andes, "../andestar.tset");
-}
-// -----------------------------------------------------------
-// -----------------------------------------------------------
-void test_andestart_addigp(MavisType &mav_andes) {
-
-    vector<uint32_t> vec = {
-      0xee87930b,
-      0x849f970b,
-      0xf915180b,
-      0xf5151c8b
-    };
-    test_andestart_details(mav_andes,vec);
-}
-
-// -----------------------------------------------------------
-// -----------------------------------------------------------
-void test_andestart_lwgp(MavisType &mav_andes) {
-
-    vector<uint32_t> vec = {
-      0x813fab2b,
-      0x817fa72b,
-      0x983fa0ab,
-      0x987fa7ab
-    };
-
-    test_andestart_details(mav_andes,vec);
-}
-// -----------------------------------------------------------
-// -----------------------------------------------------------
-void test_andestart_sdgp(MavisType &mav_andes) {
-
-    vector<uint32_t> vec = {
-      0xf4f57bab,
-      0xf5157bab,
-      0xf5557bab
-    };
-
-    test_andestart_details(mav_andes,vec);
-}
-
-// -----------------------------------------------------------
-// -----------------------------------------------------------
-void test_andestart_details(MavisType &mav_andes,vector<uint32_t> &vec) {
-
-    Instruction<uArchInfo>::PtrType astar = nullptr;
-
-    // See swizzle.py 
-    for(size_t i=0;i<vec.size();++i) {
-      astar = mav_andes.makeInst(vec[i], 0);
-      assert(astar != nullptr);
-
-      mavis::OpcodeInfo::PtrType dinfo = astar->getOpInfo();
-
-      cout<<" Input: 0x"<<hex<<setw(8)<<vec[i]<<endl;
-
-      cout << "line " << dec << __LINE__ << ": " 
-           << "DASM: 0x"<<hex<<setw(8)<<vec[i]<<" = " << astar->dasmString() << endl;
-
-      cout << "line " << dec << __LINE__ << ": " 
-           << "Signed-offset: 0x" 
-           << std::hex << astar->getSignedOffset() << endl;
-
-      cout << "line " << dec << __LINE__ << ": " 
-           << "Source regs 0x"<< std::hex << dinfo->getSourceRegs() << endl;
-
-      cout << "line " << dec << __LINE__ << ": " 
-           << "Dest regs   0x"<< std::hex << dinfo->getDestRegs() << endl;
-
-      cout << "line " << dec << __LINE__ << ": " 
-           << "Num src regs "<< std::dec << dinfo->numSourceRegs() << endl;
-
-      cout << "line " << dec << __LINE__ << ": " 
-           << "Num dst regs "<< std::dec << dinfo->numDestRegs() << endl;
-
-      cout << endl;
-    }
-}
-
-
-void runTSet(MavisType& mavis_facade, const std::string& tfile,
+void runTSet(MavisType & mavis_facade, const std::string & tfile,
              const std::vector<mavis::OpcodeInfo::ISAExtension> isa_list = {})
 {
     // Run a test file
@@ -201,9 +105,9 @@ void runTSet(MavisType& mavis_facade, const std::string& tfile,
                                optr->opinfo->isISASameAs(optr->opinfo->getISA(), i))) {
                             cout << "INSTRUCTION '" << optr->opinfo->getMnemonic() << "' "
                                  << "failed the expected ISA check against enum '"
-                                 << static_cast<std::underlying_type_t<mavis::OpcodeInfo::ISAExtension>>(i)
-                                 << "'"
-                                 << endl;
+                                 << static_cast<
+                                        std::underlying_type_t<mavis::OpcodeInfo::ISAExtension>>(i)
+                                 << "'" << endl;
                         }
                     }
                 }
@@ -212,12 +116,15 @@ void runTSet(MavisType& mavis_facade, const std::string& tfile,
             // Check direct info extraction
             try {
                 mavis::ExtractorDirectInfo ex_info_A(tinfo.mnemonic, {1, 2}, {3});
-                Instruction<uArchInfo>::PtrType iptr_A = mavis_facade.makeInstDirectly(ex_info_A, 0);
+                Instruction<uArchInfo>::PtrType iptr_A =
+                    mavis_facade.makeInstDirectly(ex_info_A, 0);
                 assert(iptr_A != nullptr);
 
-                const mavis::InstructionUniqueID uid = mavis_facade.lookupInstructionUniqueID(tinfo.mnemonic);
+                const mavis::InstructionUniqueID uid =
+                    mavis_facade.lookupInstructionUniqueID(tinfo.mnemonic);
                 mavis::ExtractorDirectInfo ex_info_B(uid, {1, 2}, {3});
-                Instruction<uArchInfo>::PtrType iptr_B = mavis_facade.makeInstDirectly(ex_info_B, 0);
+                Instruction<uArchInfo>::PtrType iptr_B =
+                    mavis_facade.makeInstDirectly(ex_info_B, 0);
                 assert(iptr_B != nullptr);
 
                 assert(iptr_A->getUID() == iptr_B->getUID());
@@ -236,61 +143,60 @@ int main() {
     constexpr mavis::InstructionUniqueID NOP_UID = 1;
 
     // UID initialization list for testing NOP and C.NOP UID's against NOP_UID
-    mavis::InstUIDList uid_init {
-        { "nop", NOP_UID},
-        { "cmov", 2}
+    mavis::InstUIDList uid_init{
+        {"nop",  NOP_UID},
+        {"cmov", 2      }
     };
 
-    mavis::AnnotationOverrides anno_overrides =
-        {
+    mavis::AnnotationOverrides anno_overrides = {
             std::make_pair("andn", "pipelined:false"),
             std::make_pair("srai", "rob_group:[\"begin\"]"),
         };
 
-    MavisType mavis_facade({"../../json/isa_rv64i.json",        // included in "g" spec
-                            "../../json/isa_rv64f.json",        // included in "g" spec
-                            "../../json/isa_rv64m.json",        // included in "g" spec
-                            "../../json/isa_rv64zmmul.json",    // included in "g" spec
-                            "../../json/isa_rv64zaamo.json",    // included in "g" spec
-                            "../../json/isa_rv64zalrsc.json",   // included in "g" spec
-                            "../../json/isa_rv64d.json",        // included in "g" spec
-                            "../../json/isa_rv64zicsr.json",    // included in "g" spec
-                            "../../json/isa_rv64zifencei.json", // included in "g" spec
-                            "../../json/isa_rv64zca.json",
-                            "../../json/isa_rv64zcd.json",
-                            "../../json/isa_rv64q.json",
-                            "../../json/isa_rv64q_addons.json",
-                            "../../json/isa_rv64h.json",
-                            "../../json/isa_rv64zfa.json",
-                            "../../json/isa_rv64zfa_d.json",
-                            "../../json/isa_rv64zfa_q.json",
-                            "../../json/isa_rv64zfa_q_addons.json",
-                            "../../json/isa_rv64zfa_h.json",
-                            "../../json/isa_rv64zve32x.json",
-                            "../../json/isa_rv64zve32f.json",
-                            "../../json/isa_rv64zve64x.json",
-                            "../../json/isa_rv64zve64d.json",
-                            "../../json/isa_rv64zvbb.json",
-                            "../../json/isa_rv64zvbc.json",
-                            "../../json/isa_rv64zvkned.json",
-                            "../../json/isa_rv64zvkg.json",
-                            "../../json/isa_rv64zvknh.json",
-                            "../../json/isa_rv64zvksed.json",
-                            "../../json/isa_rv64zvksh.json",
-                            "../../json/isa_rv64zfh.json",
-                            "../../json/isa_rv64zfh_addons.json",
-                            "../../json/isa_rv64zfhmin.json",
-                            "../../json/isa_rv64zfhmin_d.json",
-                            "../../json/isa_rv64zicbom.json",
-                            "../../json/isa_rv64zicbop.json",
-                            "../../json/isa_rv64zicboz.json",
-                            "../../json/isa_rv64zihintntl.json",
-                            "../../json/isa_rv64zihintpause.json",
-                            "../../json/isa_rv64zicond.json",
-                            "../../json/isa_rv64zawrs.json",
-                            "../../json/isa_rv64zfbfmin.json",
-                            "../../json/isa_rv64zvfbfwma.json"},
-                           {"../uarch/uarch_rv64g.json"}, uid_init, anno_overrides);
+    MavisType mavis_facade({"json/isa_rv64i.json",        // included in "g" spec
+                            "json/isa_rv64f.json",        // included in "g" spec
+                            "json/isa_rv64m.json",        // included in "g" spec
+                            "json/isa_rv64zmmul.json",    // included in "g" spec
+                            "json/isa_rv64zaamo.json",    // included in "g" spec
+                            "json/isa_rv64zalrsc.json",   // included in "g" spec
+                            "json/isa_rv64d.json",        // included in "g" spec
+                            "json/isa_rv64zicsr.json",    // included in "g" spec
+                            "json/isa_rv64zifencei.json", // included in "g" spec
+                            "json/isa_rv64zca.json",
+                            "json/isa_rv64zcd.json",
+                            "json/isa_rv64q.json",
+                            "json/isa_rv64q_addons.json",
+                            "json/isa_rv64h.json",
+                            "json/isa_rv64zfa.json",
+                            "json/isa_rv64zfa_d.json",
+                            "json/isa_rv64zfa_q.json",
+                            "json/isa_rv64zfa_q_addons.json",
+                            "json/isa_rv64zfa_h.json",
+                            "json/isa_rv64zve32x.json",
+                            "json/isa_rv64zve32f.json",
+                            "json/isa_rv64zve64x.json",
+                            "json/isa_rv64zve64d.json",
+                            "json/isa_rv64zvbb.json",
+                            "json/isa_rv64zvbc.json",
+                            "json/isa_rv64zvkned.json",
+                            "json/isa_rv64zvkg.json",
+                            "json/isa_rv64zvknh.json",
+                            "json/isa_rv64zvksed.json",
+                            "json/isa_rv64zvksh.json",
+                            "json/isa_rv64zfh.json",
+                            "json/isa_rv64zfh_addons.json",
+                            "json/isa_rv64zfhmin.json",
+                            "json/isa_rv64zfhmin_d.json",
+                            "json/isa_rv64zicbom.json",
+                            "json/isa_rv64zicbop.json",
+                            "json/isa_rv64zicboz.json",
+                            "json/isa_rv64zihintntl.json",
+                            "json/isa_rv64zihintpause.json",
+                            "json/isa_rv64zicond.json",
+                            "json/isa_rv64zawrs.json",
+                            "json/isa_rv64zfbfmin.json",
+                            "json/isa_rv64zvfbfwma.json"},
+                           {"uarch/uarch_rv64g.json"}, uid_init, anno_overrides);
     cout << mavis_facade;
 
     Instruction<uArchInfo>::PtrType inst = nullptr;
@@ -325,50 +231,50 @@ int main() {
 
     // Try creating a new context
     mavis_facade.makeContext("NEW",
-                             {"../../json/isa_rv64i.json",
-                              "../../json/isa_rv64m.json",
-                              "../../json/isa_rv64zmmul.json",
-                              "../../json/isa_rv64zaamo.json",
-                              "../../json/isa_rv64zalrsc.json",
-                              "../../json/isa_rv64f.json",
-                              "../../json/isa_rv64d.json",
-                              "../../json/isa_rv64q.json",
-                              "../../json/isa_rv64q_addons.json",
-                              "../../json/isa_rv64zfa.json",
-                              "../../json/isa_rv64zfa_d.json",
-                              "../../json/isa_rv64zfa_q.json",
-                              "../../json/isa_rv64zfa_q_addons.json",
-                              "../../json/isa_rv64zfa_h.json",
-                              "../../json/isa_rv64zca.json",
-                              "../../json/isa_rv64zcd.json",
-                              "../../json/isa_rv64zicsr.json",
-                              "../../json/isa_rv64zifencei.json",
-                              "../../json/isa_rv64zve32x.json",
-                              "../../json/isa_rv64zve32f.json",
-                              "../../json/isa_rv64zve64x.json",
-                              "../../json/isa_rv64zve64d.json",
-                              "../../json/isa_rv64zfh.json",
-                              "../../json/isa_rv64zfh_addons.json",
-                              "../../json/isa_rv64zfhmin.json",
-                              "../../json/isa_rv64zfhmin_d.json",
-                              "../../json/isa_rv64zba.json",
-                              "../../json/isa_rv64zbb.json",
-                              "../../json/isa_rv64zbc.json",
-                              "../../json/isa_rv64zbs.json",
-                              "../../json/isa_rv64zicbom.json",
-                              "../../json/isa_rv64zicbop.json",
-                              "../../json/isa_rv64zicboz.json",
-                              "../../json/isa_rv64zcb.json",
-                              "../../json/isa_rv64zihintntl.json",
-                              "../../json/isa_rv64zihintpause.json",
-                              "../../json/isa_rv64zicond.json"},
+                             {"json/isa_rv64i.json",
+                              "json/isa_rv64m.json",
+                              "json/isa_rv64zmmul.json",
+                              "json/isa_rv64zaamo.json",
+                              "json/isa_rv64zalrsc.json",
+                              "json/isa_rv64f.json",
+                              "json/isa_rv64d.json",
+                              "json/isa_rv64q.json",
+                              "json/isa_rv64q_addons.json",
+                              "json/isa_rv64zfa.json",
+                              "json/isa_rv64zfa_d.json",
+                              "json/isa_rv64zfa_q.json",
+                              "json/isa_rv64zfa_q_addons.json",
+                              "json/isa_rv64zfa_h.json",
+                              "json/isa_rv64zca.json",
+                              "json/isa_rv64zcd.json",
+                              "json/isa_rv64zicsr.json",
+                              "json/isa_rv64zifencei.json",
+                              "json/isa_rv64zve32x.json",
+                              "json/isa_rv64zve32f.json",
+                              "json/isa_rv64zve64x.json",
+                              "json/isa_rv64zve64d.json",
+                              "json/isa_rv64zfh.json",
+                              "json/isa_rv64zfh_addons.json",
+                              "json/isa_rv64zfhmin.json",
+                              "json/isa_rv64zfhmin_d.json",
+                              "json/isa_rv64zba.json",
+                              "json/isa_rv64zbb.json",
+                              "json/isa_rv64zbc.json",
+                              "json/isa_rv64zbs.json",
+                              "json/isa_rv64zicbom.json",
+                              "json/isa_rv64zicbop.json",
+                              "json/isa_rv64zicboz.json",
+                              "json/isa_rv64zcb.json",
+                              "json/isa_rv64zihintntl.json",
+                              "json/isa_rv64zihintpause.json",
+                              "json/isa_rv64zicond.json"},
                              {});
     mavis_facade.switchContext("NEW");
     cout << mavis_facade;
-    runTSet(mavis_facade, "../rv64.tset");
-    runTSet(mavis_facade, "../rv64_bits.tset", {mavis::InstMetaData::ISAExtension::B});
-    runTSet(mavis_facade, "../rv64_zcb.tset");
-    runTSet(mavis_facade, "../rv64_zicond.tset");
+    runTSet(mavis_facade, "rv64.tset");
+    runTSet(mavis_facade, "rv64_bits.tset", {mavis::InstMetaData::ISAExtension::B});
+    runTSet(mavis_facade, "rv64_zcb.tset");
+    runTSet(mavis_facade, "rv64_zicond.tset");
 
     // Check implied extraction fields for zcb c.zext.[bhw] instructions
     // c.zext.b should have 0xFF implied immediate
@@ -1054,8 +960,8 @@ int main() {
     cout << "line " << dec << __LINE__ << ": " << "DASM: 0xa422 = " << inst->dasmString() << endl;
 
     // Create a new context for testing pseudo instructions
-    mavis_facade.makeContext("PSEUDO", {"../../json/isa_rv64i.json", "../../test/isa_pseudo.json"},
-                             {"../../test/uarch_rv64g.json", "../../test/uarch_pseudo.json"});
+    mavis_facade.makeContext("PSEUDO", {"json/isa_rv64i.json", "uarch/isa_pseudo.json"},
+                             {"uarch/uarch_rv64g.json", "uarch/uarch_pseudo.json"});
     mavis_facade.switchContext("PSEUDO");
 
     // clang-format off
@@ -1304,25 +1210,25 @@ int main() {
     cout << "====== TESTING RV32 =========" << endl;
 
     // RV32
-    MavisType mavis_facade_rv32({"../../json/isa_rv32i.json",        // included in "g" spec
-                                 "../../json/isa_rv32f.json",        // included in "g" spec
-                                 "../../json/isa_rv32m.json",        // included in "g" spec
-                                 "../../json/isa_rv32zmmul.json",    // included in "g" spec
-                                 "../../json/isa_rv32zaamo.json",    // included in "g" spec
-                                 "../../json/isa_rv32zalrsc.json",   // included in "g" spec
-                                 "../../json/isa_rv32d.json",        // included in "g" spec
-                                 "../../json/isa_rv32zicsr.json",    // included in "g" spec
-                                 "../../json/isa_rv32zifencei.json", // included in "g" spec
-                                 "../../json/isa_rv32q.json",           "json/isa_rv32zfa.json",
-                                 "../../json/isa_rv32zfa_d.json",       "json/isa_rv32zfa_d_addons.json",
-                                 "../../json/isa_rv32zfa_q.json",       "json/isa_rv32zfa_h.json",
-                                 "../../json/isa_rv32zca.json",         "json/isa_rv32zcf.json",
-                                 "../../json/isa_rv32zcd.json",         "json/isa_rv32zfh.json",
-                                 "../../json/isa_rv32zfhmin.json",      "json/isa_rv32zfhmin_d.json",
-                                 "../../json/isa_rv32zihintpause.json", "json/isa_rv32zawrs.json",
-                                 "../../json/isa_rv32zilsd.json",       "json/isa_rv32zacas.json",
-                                 "../../json/isa_rv32zabha.json"},
-                                {"../../test/uarch/uarch_rv32g.json"}, uid_init, anno_overrides);
+    MavisType mavis_facade_rv32({"json/isa_rv32i.json",        // included in "g" spec
+                                 "json/isa_rv32f.json",        // included in "g" spec
+                                 "json/isa_rv32m.json",        // included in "g" spec
+                                 "json/isa_rv32zmmul.json",    // included in "g" spec
+                                 "json/isa_rv32zaamo.json",    // included in "g" spec
+                                 "json/isa_rv32zalrsc.json",   // included in "g" spec
+                                 "json/isa_rv32d.json",        // included in "g" spec
+                                 "json/isa_rv32zicsr.json",    // included in "g" spec
+                                 "json/isa_rv32zifencei.json", // included in "g" spec
+                                 "json/isa_rv32q.json",           "json/isa_rv32zfa.json",
+                                 "json/isa_rv32zfa_d.json",       "json/isa_rv32zfa_d_addons.json",
+                                 "json/isa_rv32zfa_q.json",       "json/isa_rv32zfa_h.json",
+                                 "json/isa_rv32zca.json",         "json/isa_rv32zcf.json",
+                                 "json/isa_rv32zcd.json",         "json/isa_rv32zfh.json",
+                                 "json/isa_rv32zfhmin.json",      "json/isa_rv32zfhmin_d.json",
+                                 "json/isa_rv32zihintpause.json", "json/isa_rv32zawrs.json",
+                                 "json/isa_rv32zilsd.json",       "json/isa_rv32zacas.json",
+                                 "json/isa_rv32zabha.json"},
+                                {"uarch/uarch_rv32g.json"}, uid_init, anno_overrides);
     cout << mavis_facade_rv32;
 
     // add x1, x2, x3 (same in RV32 as RV64)
@@ -1385,7 +1291,7 @@ int main() {
     catch (...)
     {
     }
-    
+
     //
     // Test 32-bit st (pair) zilsd extension
     //
@@ -1401,14 +1307,6 @@ int main() {
     }
     catch (...)
     {
-    }
-
-    // ld is only available in RV64
-    try {
-        inst = mavis_facade_rv32.makeInst(0x0001b283, 0);
-        assert(inst == nullptr);
-    } catch (const mavis::UnknownOpcode& ex) {
-        cout << "line " << dec << __LINE__ << ": " << "DASM: 0x0001b283 fails to decode. This is expected" << endl;
     }
 
     // c.jal is only available in RV32
@@ -1442,20 +1340,20 @@ int main() {
     // Create new context to test Zclsd extension
     // Zclsd has overlapping encodings with Zcf, so they can't be used at the same time
     mavis_facade_rv32.makeContext("ZCLSD",
-                                  {"../../json/isa_rv32i.json",        // included in "g" spec
-                                   "../../json/isa_rv32f.json",        // included in "g" spec
-                                   "../../json/isa_rv32m.json",        // included in "g" spec
-                                   "../../json/isa_rv32zmmul.json",    // included in "g" spec
-                                   "../../json/isa_rv32zaamo.json",    // included in "g" spec
-                                   "../../json/isa_rv32zalrsc.json",   // included in "g" spec
-                                   "../../json/isa_rv32d.json",        // included in "g" spec
-                                   "../../json/isa_rv32zicsr.json",    // included in "g" spec
-                                   "../../json/isa_rv32zifencei.json", // included in "g" spec
-                                   "../../json/isa_rv32zfa.json", "json/isa_rv32zfa_d.json",
-                                   "../../json/isa_rv32zfa_d_addons.json", "json/isa_rv32zca.json",
-                                   "../../json/isa_rv32zcd.json", "json/isa_rv32zihintpause.json",
-                                   "../../json/isa_rv32zilsd.json", "json/isa_rv32zclsd.json"},
-                                  {"../test/uarch/uarch_rv32g.json"});
+                                  {"json/isa_rv32i.json",        // included in "g" spec
+                                   "json/isa_rv32f.json",        // included in "g" spec
+                                   "json/isa_rv32m.json",        // included in "g" spec
+                                   "json/isa_rv32zmmul.json",    // included in "g" spec
+                                   "json/isa_rv32zaamo.json",    // included in "g" spec
+                                   "json/isa_rv32zalrsc.json",   // included in "g" spec
+                                   "json/isa_rv32d.json",        // included in "g" spec
+                                   "json/isa_rv32zicsr.json",    // included in "g" spec
+                                   "json/isa_rv32zifencei.json", // included in "g" spec
+                                   "json/isa_rv32zfa.json", "json/isa_rv32zfa_d.json",
+                                   "json/isa_rv32zfa_d_addons.json", "json/isa_rv32zca.json",
+                                   "json/isa_rv32zcd.json", "json/isa_rv32zihintpause.json",
+                                   "json/isa_rv32zilsd.json", "json/isa_rv32zclsd.json"},
+                                  {"uarch/uarch_rv32g.json"});
     mavis_facade_rv32.switchContext("ZCLSD");
     cout << mavis_facade_rv32;
 
@@ -1493,18 +1391,72 @@ int main() {
     {
     }
 
+    cout << "====== TESTING RV32 Zcmp/Zcmt =========" << endl;
 
-    
-    MavisType mav_andes({"../../json/isa_andestar.json"},
-                        {"../../json/isa_rv64i.json"},
-                           uid_init, anno_overrides);
+    // RV32
+    mavis_facade_rv32.makeContext("ZCMP_ZCMT",
+                                  {"json/isa_rv32i.json",        // included in "g" spec
+                                   "json/isa_rv32f.json",        // included in "g" spec
+                                   "json/isa_rv32m.json",        // included in "g" spec
+                                   "json/isa_rv32zmmul.json",    // included in "g" spec
+                                   "json/isa_rv32zaamo.json",    // included in "g" spec
+                                   "json/isa_rv32zalrsc.json",   // included in "g" spec
+                                   "json/isa_rv32d.json",        // included in "g" spec
+                                   "json/isa_rv32zicsr.json",    // included in "g" spec
+                                   "json/isa_rv32zifencei.json", // included in "g" spec
+                                   "json/isa_rv32q.json",           "json/isa_rv32zfa.json",
+                                   "json/isa_rv32zfa_d.json",       "json/isa_rv32zfa_d_addons.json",
+                                   "json/isa_rv32zfa_q.json",       "json/isa_rv32zfa_h.json",
+                                   "json/isa_rv32zca.json",         "json/isa_rv32zcf.json",
+                                   "json/isa_rv32zcmp.json",        "json/isa_rv32zcmt.json",
+                                   "json/isa_rv32zfh.json",         "json/isa_rv32zfhmin.json",
+                                   "json/isa_rv32zfhmin_d.json",    "json/isa_rv32zihintpause.json",
+                                   "json/isa_rv32zawrs.json",       "json/isa_rv32zilsd.json",
+                                   "json/isa_rv32zacas.json",       "json/isa_rv32zabha.json"},
+                                  {"uarch/uarch_rv32g.json"}, uid_init, anno_overrides);
+    mavis_facade_rv32.switchContext("ZCMP_ZCMT");
+    cout << mavis_facade_rv32;
 
-    cout << mav_andes;
+    // 0xb856 should map to cm.push  {x1, x8}, -32
+    inst = mavis_facade_rv32.makeInst(0xb856, 0);
+    assert(inst != nullptr);
+    cout << "line " << dec << __LINE__ << ": " << "DASM: 0xb856 = " << inst->dasmString() << endl;
+    assert(inst->getMnemonic() == "cm.push");
+    assert(inst->getIntDestRegs() == 0x4ull); // 1 dest
 
-    test_andestart_addigp(mav_andes);
-    test_andestart_lwgp(mav_andes);
-    test_andestart_sdgp(mav_andes);
-    test_andestar_tset(mav_andes);
-    
+    try
+    {
+        // Illegal form of cm.push -- urlist is 0
+        inst = mavis_facade_rv32.makeInst(0xb806, 0);
+        assert(inst == nullptr);
+    }
+    catch (...)
+    {
+    }
+
+    // 0xb856 should map to cm.popret        {x1, x8}, 16
+    inst = mavis_facade_rv32.makeInst(0xbe52, 0);
+    assert(inst != nullptr);
+    cout << "line " << dec << __LINE__ << ": " << "DASM: 0xbe52 = " << inst->dasmString() << endl;
+    assert(inst->getMnemonic() == "cm.popret");
+    assert(inst->getIntDestRegs() == 0x106ull); // 3 dests
+
+    //
+    // Test 32-bit Zcmt extension (cm.jt instruction)
+    //
+    inst = mavis_facade_rv32.makeInst(0xa002, 0);
+    cout << "line " << dec << __LINE__ << ": " << "DASM: 0xa002 = " << inst->dasmString() << endl;
+    assert(inst->getMnemonic() == "cm.jt");
+    assert(inst->getImmediate() == 0x0ull);
+
+    //
+    // Test 32-bit Zcmt extension (cm.jalt instruction)
+    //
+    inst = mavis_facade_rv32.makeInst(0xa082, 0);
+    cout << "line " << dec << __LINE__ << ": " << "DASM: 0xa082 = " << inst->dasmString() << endl;
+    assert(inst->getMnemonic() == "cm.jt");
+    assert(inst->getIntDestRegs() == 0x2ull);
+    assert(inst->getImmediate() == 32ull);
+
     return 0;
 }
