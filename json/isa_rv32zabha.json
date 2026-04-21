@@ -76,7 +76,7 @@
     "tags" : ["zabha"],
     "form" : "AMO",
     "stencil" : "0x800002f",
-    "type" : ["int", "load", "atomic"],
+    "type" : ["int", "load", "store", "atomic"],
     "l-oper" : "all",
     "data" : 32
   },
@@ -166,7 +166,7 @@
     "tags" : ["zabha"],
     "form" : "AMO",
     "stencil" : "0x800102f",
-    "type" : ["int", "load", "atomic"],
+    "type" : ["int", "load", "store", "atomic"],
     "l-oper" : "all",
     "data" : 32
   },

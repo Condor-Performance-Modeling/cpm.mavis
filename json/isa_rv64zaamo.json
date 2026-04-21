@@ -76,7 +76,7 @@
     "tags" : ["a", "g"],
     "form" : "AMO",
     "stencil" : "0x800202f",
-    "type" : ["int", "load", "atomic"],
+    "type" : ["int", "load", "store", "atomic"],
     "l-oper" : "all",
     "data" : 32
   },
@@ -157,7 +157,7 @@
     "tags" : ["a", "g"],
     "form" : "AMO",
     "stencil" : "0x800302f",
-    "type" : ["int", "load", "atomic"],
+    "type" : ["int", "load", "store", "atomic"],
     "l-oper" : "all",
     "data" : 64
   }
